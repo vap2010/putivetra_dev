@@ -1,0 +1,15 @@
+<% form.object.send("build_#{field.name}") unless form.object.send(field.name) %>
+<fieldset>
+  <legend><%= field.label %></legend>
+  <%= form.fields_for field.name do |nested_form| %>
+    <% for attr in [:title, :keywords, :description, :url] %>
+      <div class="clearfix field string_type">
+        <%= nested_form.label attr %>
+        <div class="input">
+          <%= nested_form.text_field attr %>
+        </div>
+      </div>
+    <% end %>
+    <%= nested_form.generate({:action => :create, :model_config => field.associated_model_config, :nested_in => field.name }) %>
+  <% end %>
+</fieldset>

@@ -1,0 +1,17 @@
+- models = RailsAdmin::Config.visible_models.select { |model| authorized?(:index, model.abstract_model) }
+- root_models = models.select { |model| model.parent == :root }
+
+%ul#nav.navigation
+  - [Article, Category].each do |model|
+    = render :partial => "rails_admin/sidebar_item", :locals => {:model => RailsAdmin.config(model)}
+%a{:href => "javascript://", :class => "js-toggle-opt-models"} [Все модели]
+%a{:href => "javascript://", :class => "js-toggle-opt-models", :style => "display:none"} [Спрятать модели]
+%ul#nav.navigation.js-opt-models{:style => "display:none"}
+  - (root_models - [RailsAdmin.config(Article), RailsAdmin.config(Category)]).each do |model|
+    = render :partial => "rails_admin/sidebar_item", :locals => {:model => model}
+:javascript
+  $(".js-toggle-opt-models").click(function() {
+  $(".js-opt-models").toggle();
+  $(".js-toggle-opt-models").toggle();
+  });
+= treeview(true) if controller.action_name != 'index'

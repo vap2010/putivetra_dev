@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Putivetra | <%= article_title @meta_tag %></title>
+  <meta name="description" content="<%= article_description @meta_tag %>">
+  <meta name="keywords" content="<%= article_keywords @meta_tag %>">
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
