@@ -15,26 +15,48 @@ class ArticlesController < ApplicationController
   end
 
   def novosti_index
-    render :text => 'novosti_index'
+    render :text => "novosti_index  #{novosti_index_path}" 
   end
-
   def novosti
     render :text => "novosti  x #{params[:id]} "
   end
 
+  def rabota_index
+    render :text => 'rabota_index'
+  end
+  def rabota
+    render :text => "rabota  x #{params[:id]} "
+  end
 
-  def slovar_index # :as => :slovar_index
-    render :text => "slovar_index "
+  def nashi_proekty_index
+    render :text => 'nashi_proekty'
   end
-  def slovar        # :as => :slovar_lang
-    render :text => "slovar_lang #{params[:id]} "
+  def nashi_proekty
+    render :text => "nashi_proekty  x #{params[:id]} "
   end
-  def slovar_letter  # :as => :slovar_letter
-    render :text => "slovar_letter #{params[:id]}  #{params[:letter]} "
+
+  def otzivi_index
+    render :text => 'otzivi_index'
   end
-  def slovar_word    # :as => :slovar_word
-    render :text => "slovar_word  #{params[:id]}   #{params[:letter]}   #{params[:word]} "
+  def otzivi
+    render :text => "otzivi  x #{params[:id]} "
   end
+
+  def nagrady_index
+    render :text => 'nagrady_index'
+  end
+  def nagrady
+    render :text => "nagrady  x #{params[:id]} "
+  end
+
+  def akcii_index
+    render :text => 'akcii_index'
+  end
+  def akcii
+    render :text => "akcii  x #{params[:id]} "
+  end
+
+
 
 
 
@@ -44,10 +66,6 @@ class ArticlesController < ApplicationController
 
   private
   def find_meta_tag
-
-
-
-
     @meta_tag = MetaTag.find_by_url(params[:id])
   end
 
