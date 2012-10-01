@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/*
+ Print CSS v1.1 []
+ -----------------------------------
+ Last modified: 24.05.2012
+ Author: Ruslan B. (r.beygulenko@gmail.com )
+ Please attribute the author if you use it
+*/
+
+a:link:after, a:visited:after { content: " (" attr(href) ")"; font-size: 90%; }
+/* a[href^="/"]:after { content: " (http://www.yourdomain.com" attr(href) ") ";} */

@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   #before_filter :find_meta_tag, :find_article, :only => :show
   before_filter :find_meta_tag, :find_article, :except => :index
+  # layout "application"
 
   def index
     @article = Article.find_by_parent_id(nil)
@@ -10,12 +11,10 @@ class ArticlesController < ApplicationController
   def show
   end
 
-  def brand
-    render :text => "ok - ok"
-  end
-
   def novosti_index
-    render :text => "novosti_index  #{novosti_index_path}" 
+    @article = Article.new
+    @article.body = ' dfdf '
+    #render :text => "novosti_index  #{novosti_index_path}" 
   end
   def novosti
     render :text => "novosti  x #{params[:id]} "
@@ -53,18 +52,13 @@ class ArticlesController < ApplicationController
     render :text => 'akcii_index'
   end
   def akcii
-    render :text => "akcii  x #{params[:id]} "
+    #render :text => "akcii  x #{params[:id]} "
   end
 
 
 
-
-
-
-
-
-
   private
+  
   def find_meta_tag
     @meta_tag = MetaTag.find_by_url(params[:id])
   end

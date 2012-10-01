@@ -1,22 +1,4 @@
 Putivetra::Application.routes.draw do
-  get "brands/page"
-
-  get "brands/subpage"
-
-  get "brands/brand_index"
-
-  get "brands/brand_category"
-
-  get "brands/brand_subcategory"
-
-  get "brands/brand_series"
-
-  get "brands/brand_block"
-
- # get "dictionaries/slovar_index"
- # get "dictionaries/slovar"
- # get "dictionaries/slovar_letter"
- # get "dictionaries/slovar_word"
 
   devise_for :users
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
@@ -24,41 +6,42 @@ Putivetra::Application.routes.draw do
   root :to => "articles#index"
 
   Brand.find(:all).each do |b|
-    match  b.title.downcase.to_s              => 'brand#brand_index',   :as => "#{b.title.downcase.to_s}_index".to_sym
-    match  b.title.downcase.to_s + '/:cat'       => 'brand#brand_category',  :as => "#{b.title.downcase.to_s}_category".to_sym
-    match  b.title.downcase.to_s + '/:cat/:subcat'  => 'brand#brand_subcategory', :as => "#{b.title.downcase.to_s}_subcategory".to_sym
-    match  b.title.downcase.to_s + '/:cat/:subcat/:series'  => 'brand#brand_series', :as => "#{b.title.downcase.to_s}_series".to_sym
-    match  b.title.downcase.to_s + '/:cat/:subcat/:series/:block'  => 'brand#brand_block', :as => "#{b.title.downcase.to_s}_block".to_sym
+    burl = b.meta_tag.url.downcase.to_s
+    match  burl + '.html'            => 'brands#brand_index',  :brand => "#{b.id}", :as => "#{burl}_index".to_sym
+    match  burl + '/:cat.html'       => 'brands#brand_category',  :brand => "#{b.id}",  :as => "#{burl}_category".to_sym
+    match  burl + '/:cat/:subcat.html'  => 'brands#brand_subcategory',  :brand => "#{b.id}", :as => "#{burl}_subcategory".to_sym
+    match  burl + '/:cat/:subcat/:series.html'  => 'brands#brand_series',  :brand => "#{b.id}", :as => "#{burl}_series".to_sym
+    match  burl + '/:cat/:subcat/:series/:block.html'  => 'brands#brand_block',  :brand => "#{b.id}", :as => "#{burl}_block".to_sym
   end
 
-  get  'novosti'     => 'articles#novosti_index', :as => :novosti_index
-  match  'novosti/:id' => 'articles#novosti',     :as => :novosti
+  get  'novosti.html'     => 'articles#novosti_index', :as => :novosti_index
+  match  'novosti/:id.html' => 'articles#novosti',     :as => :novosti
 
-  get  'rabota'     => 'articles#rabota_index', :as => :rabota_index
-  match  'rabota/:id' => 'articles#rabota',     :as => :rabota
+  get  'rabota.html'     => 'articles#rabota_index', :as => :rabota_index
+  match  'rabota/:id.html' => 'articles#rabota',     :as => :rabota
 
-  get  'nashi_proekty'     => 'articles#nashi_proekty_index', :as => :nashi_proekty_index
-  match  'nashi_proekty/:id' => 'articles#nashi_proekty',     :as => :nashi_proekty
+  get  'nashi_proekty.html'     => 'articles#nashi_proekty_index', :as => :nashi_proekty_index
+  match  'nashi_proekty/:id.html' => 'articles#nashi_proekty',     :as => :nashi_proekty
 
-  get  'otzivi'     => 'articles#otzivi_index', :as => :otzivi_index
-  match  'otzivi/:id' => 'articles#otzivi',     :as => :otzivi
+  get  'otzivi.html'     => 'articles#otzivi_index', :as => :otzivi_index
+  match  'otzivi/:id.html' => 'articles#otzivi',     :as => :otzivi
 
-  get  'nagrady'     => 'articles#nagrady_index', :as => :nagrady_index
-  match  'nagrady/:id' => 'articles#nagrady',     :as => :nagrady
+  get  'nagrady.html'     => 'articles#nagrady_index', :as => :nagrady_index
+  match  'nagrady/:id.html' => 'articles#nagrady',     :as => :nagrady
 
-  get  'akcii'     => 'articles#akcii_index', :as => :akcii_index
-  match  'akcii/:id' => 'articles#akcii',     :as => :akcii
+  get  'akcii.html'     => 'articles#akcii_index', :as => :akcii_index
+  match  'akcii/:id.html' => 'articles#akcii',     :as => :akcii
 
-  get  'slovar'             => 'dictionaries#slovar_index',  :as => :slovar_index
-  match  'slovar/:id'           => 'dictionaries#slovar',    :as => :slovar_lang
-  match  'slovar/:id/:letter'       => 'dictionaries#slovar_letter', :as => :slovar_letter
-  match  'slovar/:id/:letter/:word' => 'dictionaries#slovar_word',   :as => :slovar_word
+  get  'slovar.html'             => 'dictionaries#slovar_index',  :as => :slovar_index
+  match  'slovar/:id.html'           => 'dictionaries#slovar',    :as => :slovar_lang
+  match  'slovar/:id/:letter.html'       => 'dictionaries#slovar_letter', :as => :slovar_letter
+  match  'slovar/:id/:letter/:word.html' => 'dictionaries#slovar_word',   :as => :slovar_word
 
-  match ':id',         :to => "brand#page"
-  match ':id/:subcat', :to => "brand#subpage"
+  match ':id.html',         :to => "brands#page",    :as => :page
+  match ':id/:subcat.html', :to => "brands#subpage", :as => :subpage
 
- # match ':id/:series'        => 'brand#series'
- # match ':id/:series/:block' => 'brand#block'
+ # match ':id/:series'        => 'brands#series'
+ # match ':id/:series/:block' => 'brands#block'
 
 # articles  index  novosti_index novosti  rabota_index rabota  nashi_proekty_index nashi_proekty
 #           otzivi_index otzivi  nagrady_index nagrady  akcii_index akcii

@@ -1,0 +1,75 @@
+<h1> Url type Map </h1>
+
+<table>
+<tr>
+<td>
+ <p><%= daikin_index_path %>
+ <p><%= daikin_category_path    :cat => 'daikin_category' %>
+ <p><%= daikin_subcategory_path :cat => 'daikin_category', :subcat => 'daikin_subcategory' %>
+ <p><%= daikin_series_path      :cat => 'daikin_category', :subcat => 'daikin_subcategory', :series => 'series' %>
+ <p><%= daikin_block_path       :cat => 'daikin_category', :subcat => 'daikin_subcategory', :series => 'series', :block => 'brand_block' %>
+ <p>
+ <p><%= novosti_index_path %>
+ <p><%= novosti_path :id => 'news' %>
+ <p>
+ <p><%= rabota_index_path %>
+ <p><%= rabota_path :id => 'job' %>
+ <p>
+ <p><%= nashi_proekty_index_path %>
+ <p><%= nashi_proekty_path :id => 'prj' %>
+ <p>
+ <p><%= otzivi_index_path %>
+ <p><%= otzivi_path :id => 'test' %>
+ <p>
+ <p><%= nagrady_index_path %>
+ <p><%= nagrady_path :id => 'win' %>
+ <p>
+ <p><%= akcii_index_path %>
+ <p><%= akcii_path :id => 'sale' %>
+ <p>
+ <p><%= slovar_index_path %>
+ <p><%= slovar_lang_path :id => :ru %>
+ <p><%= slovar_letter_path :id => :ru, :letter => 'A' %>
+ <p><%= slovar_word_path :id => :ru, :letter => 'A', :word => 'arm' %>
+ <p>
+ <p><%= page_path :id => 'page_name' %>
+ <p><%= subpage_path :id => 'page_name', :subcat => 'subpage' %>
+ <p>
+</td>
+
+<td>
+ <p><%= link_to 'daikin_index_path', daikin_index_path %>
+ <p><%= link_to 'daikin_category_path', daikin_category_path (:cat => 'daikin_category') %>
+ <p><%= link_to 'daikin_subcategory_path', daikin_subcategory_path (:cat => 'daikin_category', :subcat => 'daikin_subcategory') %>
+
+ <p><%= link_to 'daikin_series_path', daikin_series_path (:cat => 'daikin_category', :subcat => 'daikin_subcategory', :series => 'series') %>
+ <p><%= link_to 'daikin_block_path', daikin_block_path (:cat => 'daikin_category', :subcat => 'daikin_subcategory', :series => 'series', :block => 'brand_block') %>
+ <p>
+ <p><%= link_to 'novosti_index_path', novosti_index_path %>
+ <p><%= link_to 'novosti_path', novosti_path (:id => 'news') %>
+ <p>
+ <p><%= link_to 'rabota_index_path', rabota_index_path %>
+ <p><%= link_to 'rabota_path', rabota_path (:id => 'job') %>
+ <p>
+ <p><%= link_to 'nashi_proekty_index_path', nashi_proekty_index_path %>
+ <p><%= link_to 'nashi_proekty_path', nashi_proekty_path (:id => 'prj') %>
+ <p>
+ <p><%= link_to 'otzivi_index_path', otzivi_index_path %>
+ <p><%= link_to 'otzivi_path', otzivi_path (:id => 'test') %>
+ <p>
+ <p><%= link_to 'nagrady_index_path', nagrady_index_path %>
+ <p><%= link_to 'nagrady_path', nagrady_path (:id => 'win') %>
+ <p>
+ <p><%= link_to 'akcii_index_path', akcii_index_path %>
+ <p><%= link_to 'akcii_path', akcii_path (:id => 'sale') %>
+ <p>
+ <p><%= link_to 'slovar_index_path', slovar_index_path %>
+ <p><%= link_to 'slovar_lang_path', slovar_lang_path (:id => :ru) %>
+ <p><%= link_to 'slovar_letter_path', slovar_letter_path (:id => :ru, :letter => 'A') %>
+ <p><%= link_to 'slovar_word_path', slovar_word_path (:id => :ru, :letter => 'A', :word => 'arm') %>
+ <p>
+ <p><%= link_to 'page_path', page_path (:id => 'page_name') %>
+ <p><%= link_to 'subpage_path', subpage_path (:id => 'page_name', :subcat => 'subpage') %>
+ <p>
+
+</td></tr></table>

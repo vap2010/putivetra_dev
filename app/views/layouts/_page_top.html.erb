@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<title>Inner</title>
+<link href="/assets/css/reset.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/assets/css/fonts/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/assets/css/typography.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/assets/css/forms.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/assets/css/layout.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/assets/css/print.css" rel="stylesheet" type="text/css" media="print" />
+<!--[if lt IE 9]><link href="/assets/css/ie.css" rel="stylesheet" type="text/css" media="all" /><![endif]-->
+<script type="text/javascript" src="/assets/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/assets/js/js.common.js"></script>
+</head>
+
+<body>
+
+<!--layout-->
+<div id="layout"> 
+  <!--header-->
+  <div id="header" class="clearfix"> 
+    <!--site logo-->
+    <div class="logo"><a href="index.html" title="seo title">site title</a></div>
+    <!--site logo end--> 
+    <!--slogan-->
+    <div class="slogan">КОНДИЦИОНЕРЫ * ВЕНТИЛЯЦИЯ * ЭЛЕКТРООТОПЛЕНИЕ</div>
+    <!--slogan end--> 
+    <!--phone-->
+    <div class="phone"><span>(495)</span> 662-5876</div>
+    <!--phone end--> 
+    <!--description-->
+    <div class="description"> климатическая компания <span>Официальный дилер</span> </div>
+    <!--description end--> 
+    <a href="" class="search_params">параметрический поиск</a> 
+    <!--cart-->
+    <div class="cart">
+      <div class="c">
+        <div class="user_name"><span>Имя Фамилия</span> Добрый день!</div>
+        <!--cart items-->
+        <a href="" class="cart_items">
+          <span class="col_a">В корзине<br />
+            5 товаров </span>
+          <span class="col_b">На сумму<br />
+            12 345 678 руб.</span>
+        </a>
+        <!--cart items end--> 
+      </div>
+    </div>
+    <!--cart end--> 
+    <!--search-->
+    <form action="index.html">
+      <div class="search">
+        <input type="text" onfocus="if (this.value == 'введите слово или фразу для поиска...') { this.value=''; }" onblur="if (this.value == '') { this.value='введите слово или фразу для поиска...' }" value="введите слово или фразу для поиска..." />
+        <input type="image" src="/assets/images/search_btn.png" />
+      </div>
+    </form>
+    <!--search end--> 
+  </div>
+  <!--header end-->
+  <div id="subheader"> 
+    <!--header navigation-->
+    <ul class="nav clearfix">
+      <li class="m1"><a href="" class="active">link 1</a></li>
+      <li class="m2"><a href="">link 2</a></li>
+      <li class="m3"><a href="">link 3</a></li>
+      <li class="m4"><a href="">link 3</a></li>
+      <li class="m5"><a href="">link 3</a></li>
+      <li class="m6"><a href="">link 3</a></li>
+      <li class="m7"><a href="">link 3</a></li>
+      <li class="m8"><a href="">link 3</a></li>
+    </ul>
+    <!--header navigation end--> 
+    <!--sitemap links-->
+    <ul class="sitemap">
+      <li><a href=""><img src="/assets/images/ico_home.png" alt="" /></a></li>
+      <li><a href=""><img src="/assets/images/ico_sitemap.png" alt="" /></a></li>
+      <li><a href=""><img src="/assets/images/ico_mail.png" alt="" /></a></li>
+    </ul>
+    <!--sitemap links end--> 
+    
+  </div>
+  <% if controller_name == "articles" and action_name == "index" %>
+   <!-- header slider-->
+   <div class="header_slider"><img src="/assets/images/header_img.jpg" alt="" /></div>
+   <!-- header slider end-->
+  <% else %>
+   <ul class="breadcrumbs clearfix">
+    <li><a href=""><img src="/assets/images/breadcrumb_home.png" alt="" /></a></li>
+    <li><a href="">КАТАЛОГ ОБОРУДОВАНИЯ</a></li>
+    <li class="last"> <a href="">DAIKIN</a></li>
+   </ul>
+  <% end %>
+<hr>

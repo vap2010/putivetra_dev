@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+/*
+ Forms v1.2
+ -----------------------------------
+ Last modified: 24.05.2012
+ Author: Ruslan B. (r.beygulenko@gmail.com )
+ Please attribute the author if you use it
+*/
+
+input::-moz-focus-inner { border: 0;padding: 0;}
+input {-webkit-border-fit:lines; }
+textarea {resize:none;}
+
+
+/* layout forms */
+input {}
+input[type=text] {}
+input[type=password] {}
+input[type=checkbox] {}
+input[type=radio] {}
+
+textarea {}
+label {}
+legend {}
+fieldset {}
+
+
+.params_sort .params_sort_title { font-size: 18px; color: #065A7A; text-transform: uppercase; margin-bottom: 20px; }
+.params_sort_form .form_col1 { width: 215px; float: left; }
+.params_sort_form .form_col2 { width: 240px; float: right; }
+.params_sort_form { padding-top: 35px; }
+.params_sort_form .form_link { font-size: 14px; margin-bottom: 20px; }
+.params_sort_form .form_link input[type=checkbox] { margin-right: 4px; }
+.params_sort_form .form_link label { font-size: 12px; margin-right: 5px; }
+.params_sort_form input[type=checkbox] { margin-right: 7px; }
+.params_sort_form p { margin-bottom: 9px; }
+.params_sort_form .form_group { margin-bottom: 15px; }
+.params_sort_form .form_group2 input[type=text] { width: 65px; }
