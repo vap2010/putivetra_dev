@@ -1,4 +1,6 @@
 class BrandsController < ApplicationController
+  before_filter :find_meta_tag, :find_article
+
   def page
   end
 

@@ -1,14 +1,34 @@
+##require 'rich/integrations/rails_admin_editor'
+## RailsAdmin::Config::Fields::Types::register(Rich::Integrations::RailsAdmin::RichEditor)
 I18n.locale = :ru
+
 RailsAdmin.config do |config|
 
   config.actions do
     all
     root :tools
+    ## dashboard do    #statistics false    end
   end
 
   if Article.table_exists?
     config.model Article do
       treeview true
+      list do
+        field :title
+        field :created_at
+      end
+      edit do
+        field :title
+        field :is_published
+        field :are_children_published
+        field :body, :rich_editor do
+           config({
+             :insert_many => true
+           })
+        end
+        include_all_fields
+      end
+
     end
   end
 

@@ -14,12 +14,14 @@ namespace :vap_tools do
     puts "    #{datafile} "
 
     if File.exists?(datafile)
-      #DataBaseTool.add_data_to_model(ENV['model'], ENV['file'])
-      puts Rails.root
+      # DataBaseTool.add_data_to_model(ENV['model'], ENV['file'])
+      # puts Rails.root
       puts Rails.env
       datafile = Rails.root + datafile
+      puts
       puts datafile
-      DataBaseTool.add_data_to_model_from_csv(ENV['model'], Rails.root + datafile)
+      puts
+      DataBaseTool.add_data_to_model_from_csv(ENV['model'], datafile)
       puts
       puts "    ok"
     else

@@ -12,6 +12,8 @@ gem 'paperclip'
 gem 'fastercsv'
 gem 'ancestry'
 
+gem 'rich'
+
 gem 'json'
 
 # Gems used only for assets and not required

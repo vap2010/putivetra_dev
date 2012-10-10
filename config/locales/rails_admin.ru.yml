@@ -8,6 +8,11 @@ ru:
       previous: "&laquo; Prev"
       next: "Next &raquo;"
       truncate: "…"
+  datetime:
+    distance_in_words:
+      x_days: "день"
+      x_minutes: "минуту"
+      about_x_hours: "час"
   admin:
     dashboard:
       pagename: "Управление сайтом"
@@ -107,6 +112,7 @@ ru:
         breadcrumb: "Создать"
         menu: "Создать"
         link: "Подключить"
+        done: "Создано"
       export:
         title: "Выгрузить данные объекта %{model_label}"
         breadcrumb: "Выгрузить данные объекта %{model_label}"
@@ -120,6 +126,7 @@ ru:
         title: "Редактировать объект %{model_label}"
         breadcrumb: "Редактировать объект %{model_label}"
         menu: "Редактировать объект %{model_label}"
+        link: "Подключить"
       show:
         title: "Показать объект %{model_label}"
         breadcrumb: "Показать объект %{model_label}"
@@ -151,3 +158,5 @@ ru:
       optional: "опция"
       char_length_up_to: "Знаков не более: "
       required: "Обязательное"
+    misc:
+      ago: "назад"
