@@ -4,6 +4,7 @@ class DataBaseTool
 
   #  rake vap_tools:add_data_to_model_from_csv model=Vacancy file=abc.txt --trace
   #  DataBaseTool.add_data_to_model_from_csv('Vacancy', '/application/rails/putivetra_dev/tmp/vap_tools_work/abc.txt')
+  #  DataBaseTool.add_data_to_model_from_csv('Article', '')
 
   # 
 
@@ -11,7 +12,7 @@ class DataBaseTool
     if file.class.to_s == 'Pathname' and file.size? > 0
       #file = @@default_data_path + "#{file}"
       # путь подставляется из rake-задачи
-    elsif file.class.to_s == 'String' and file.size? > 0
+    elsif file.class.to_s == 'String' and file.size > 0
       file = @@default_data_path + "#{file}"
     else
       ## file = @@default_data_path + 'abc.txt'
@@ -43,7 +44,14 @@ class DataBaseTool
       arvals = line.split(/\t/)
       self.quchomp!(arvals)
       arkey  = arvals.shift.to_i
-      obed = m.find(:all, :conditions => "#{tkey} = #{arkey}", :limit => 1).first
+
+      puts "======    line   =  #{line} "
+      puts "======    arkey   =  #{arkey} "
+      puts "======    tkey    =  #{tkey}  "
+      puts "=========== #{m.to_s}      "
+
+      # obed = m.find(:all, :conditions => "#{tkey} = #{arkey}", :limit => 1).first
+      obed = self.find_exsist_object(m, tkey, arkey)
 
       unless obed
         res[arkey] = '|no_entry'
@@ -51,7 +59,6 @@ class DataBaseTool
       else
         res[arkey] = ''
       end
-
 
       ## ^path: загрузка из папки default_data_path + "folder_path/"  файла  "id_hurl.html"
       ## ^file: загрузка из файла default_data_path + "folder_path/file_name.ext"
@@ -77,11 +84,22 @@ class DataBaseTool
           if k =~ /^(.+) \[(.+)\]/
             k  = $1
             sm = sub_methods[$2]
+
+            meta_url = ''
             if sm == 'meta_tag'
-              obed.build_meta_tag unless obed.meta_tag
-              eval "obed.meta_tag.#{k.to_s} = \"#{arvals[i]}\""
+              if k == 'url'
+                mt = MetaTag.find(:all, :conditions => "url = '#{arvals[i]}'").first
+                if mt
+                  meta_url = "#{mt.metatagable_type} #{mt. metatagable_id}"
+                  puts "  ------>  #{meta_url} "
+                end
+              end
+              if meta_url == ''
+                obed.build_meta_tag unless obed.meta_tag
+                eval "obed.meta_tag.#{k.to_s} = \"#{arvals[i]}\""
+              end
+              
             elsif sm == 'abc'
-          
             end
           else
             obed[k] = arvals[i]
@@ -95,8 +113,18 @@ class DataBaseTool
         res[arkey] += '|saved'
         puts " --------- save #{obed.id.to_i}"
       end
+      puts obed.inspect
     end
+    
     return res
+  end
+
+
+
+  def self.find_exsist_object(ob, tkey, arkey)
+    ob.find(:all, :conditions => "#{tkey} = #{arkey}", :limit => 1).first
+  rescue
+    nil
   end
 
 

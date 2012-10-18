@@ -1,11 +1,25 @@
 class BrandsController < ApplicationController
-  before_filter :find_meta_tag, :find_article
+  before_filter :find_meta_tag, :find_article, :find_selected_artcles
 
   def page
   end
 
   def subpage
   end
+
+
+
+  def katalog_index
+
+  end
+
+
+
+  def brands_index
+
+  end
+
+
 
   def brand_index
   end

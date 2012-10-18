@@ -7,6 +7,8 @@ Putivetra::Application.routes.draw do
 
   root :to => "articles#index"
 
+  get  'firmy_i_brendi.html'  => 'brands#brands_index', :as => :brands_index
+
   Brand.find(:all).each do |b|
     burl = b.meta_tag.url.downcase.to_s
     match  burl + '.html'            => 'brands#brand_index',  :brand => "#{b.id}", :as => "#{burl}_index".to_sym
@@ -16,6 +18,17 @@ Putivetra::Application.routes.draw do
     match  burl + '/:cat/:subcat/:series/:block.html'  => 'brands#brand_block',  :brand => "#{b.id}", :as => "#{burl}_block".to_sym
   end
 
+  get  'katalog_oborudovania.html'  => 'brands#katalog_index', :as => :katalog_index
+
+  Category.roots[0].children.each do |c|
+    if c.meta_tag
+      caturl = c.meta_tag.url.downcase.to_s
+      match  caturl + '.html'       => 'brands#category',  :cat_id => "#{c.id}", :as => "cat_#{c.id}".to_sym
+      match  caturl + '/:subcat.html'     => 'brands#subcategory',  :brand => "#{c.id}", :as => "subcat_#{c.id}".to_sym
+      match  caturl + '/:subcat/:series.html'   => 'brands#series',  :brand => "#{c.id}", :as => "series_#{c.id}".to_sym
+    end
+  end
+ 
   get  'novosti.html'     => 'articles#novosti_index', :as => :novosti_index
   match  'novosti/:id.html' => 'articles#novosti',     :as => :novosti
 

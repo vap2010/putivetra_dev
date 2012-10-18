@@ -94,8 +94,15 @@
   <% else %>
    <ul class="breadcrumbs clearfix">
     <li><a href=""><img src="/assets/images/breadcrumb_home.png" alt="" /></a></li>
-    <li><a href="">КАТАЛОГ ОБОРУДОВАНИЯ</a></li>
-    <li class="last"> <a href="">DAIKIN</a></li>
+    <% for item in @selected_items -%>
+      <% if item == @selected_items.last -%>
+      <li class="last"> <a><%= item.title -%></a></li>
+      <% else -%>
+      <li><a href="<%= item.url -%>"><%= item.title -%></a></li>
+      <% end -%>
+    <% end -%>
+
+
    </ul>
   <% end %>
 
