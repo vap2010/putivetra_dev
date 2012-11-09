@@ -1,11 +1,19 @@
 class DataBaseTool
+  ############################ mass DB tools ##############################
+  # build and edit pages  --  DataBaseTool.add_data_to_model_from_csv('Article', '')
+  ##                          DataBaseTool.get_childrens(Article, parent_id, [])
+  ##                          DataBaseTool.get_childrens_ids(Article, parent_id, [])
+  # output_hand_selected_pages.csv  --  DataBaseTool.output_hand_selected_pages(parent_id)
+
+
+  ############################ /mass DB tools #############################
+
   @@default_data_path = '/application/rails/putivetra_dev/tmp/vap_tools_work/'
 
 
   #  rake vap_tools:add_data_to_model_from_csv model=Vacancy file=abc.txt --trace
   #  DataBaseTool.add_data_to_model_from_csv('Vacancy', '/application/rails/putivetra_dev/tmp/vap_tools_work/abc.txt')
   #  DataBaseTool.add_data_to_model_from_csv('Article', '')
-
   # 
 
   def self.add_data_to_model_from_csv(model, file)
@@ -31,25 +39,25 @@ class DataBaseTool
     self.add_data_to_model(model, titles, ar).each_pair do |er, note|
       puts "#{er}:  #{note}"
     end
+    ''
   end
 
 
   ##
   def self.add_data_to_model(model, titles, ar)
+    log_f = File.open("./rc_log_DataBaseTool_1.txt", "w")
+    pre_parent_id = 1
+
     res = Hash.new('')
     tkey = titles.shift.downcase.chomp
     m = eval "#{model.capitalize}"
 
     ar.each do |line|
+      parent_id_set = true
       arvals = line.split(/\t/)
       self.quchomp!(arvals)
-      arkey  = arvals.shift.to_i
-
-      puts "======    line   =  #{line} "
-      puts "======    arkey   =  #{arkey} "
-      puts "======    tkey    =  #{tkey}  "
-      puts "=========== #{m.to_s}      "
-
+      arkey  = arvals.shift
+      
       # obed = m.find(:all, :conditions => "#{tkey} = #{arkey}", :limit => 1).first
       obed = self.find_exsist_object(m, tkey, arkey)
 
@@ -57,13 +65,14 @@ class DataBaseTool
         res[arkey] = '|no_entry'
         obed = m.new
       else
-        res[arkey] = ''
+        res[arkey] = '|finded'
       end
 
       ## ^path: загрузка из папки default_data_path + "folder_path/"  файла  "id_hurl.html"
       ## ^file: загрузка из файла default_data_path + "folder_path/file_name.ext"
       ##
       titles.each_with_index do |k, i|
+        k = k.downcase.chomp
         if arvals[i] =~ /^path:(.+)/
           arvals[i] = File.open(@@default_data_path + "#{$1}#{arkey}_#{k}.html", 'r'){ |file| file.read }
         elsif arvals[i] =~ /^file:(.+)/
@@ -73,6 +82,9 @@ class DataBaseTool
           else
             puts "Не найден файл \t #{src_file}"
           end
+        elsif k == 'parent_id' and arvals[i] == 'pre'
+          arvals[i] = pre_parent_id
+          parent_id_set = false
         elsif arvals[i] =~ /^none:(.+)/
           arvals[i] = 'none'
         end
@@ -111,18 +123,20 @@ class DataBaseTool
 
       if obed.save
         res[arkey] += '|saved'
-        puts " --------- save #{obed.id.to_i}"
+        puts " --------- save #{obed.id}"
+        pre_parent_id = obed.id if parent_id_set
       end
       puts obed.inspect
     end
-    
+
+    log_f.close
     return res
   end
 
 
 
   def self.find_exsist_object(ob, tkey, arkey)
-    ob.find(:all, :conditions => "#{tkey} = #{arkey}", :limit => 1).first
+    ob.find(:all, :conditions => "#{tkey} = '#{arkey}'", :limit => 1).first
   rescue
     nil
   end
@@ -136,6 +150,115 @@ class DataBaseTool
       end
   end
 
+
+  #############################################################################
+  ############  [[pic.jpg]] => <img src="pic.jpg" />  #########################
+
+  ##  DataBaseTool.insert_img_tags_to_bodies('Article', 'id', 1029, '/assets/images/brandpages_pictures/')
+  ##  DataBaseTool.insert_img_tags_to_bodies('Article', 'parent', 989, '/assets/images/brandpages_pictures/')     # Бренды в статьях
+
+  #    DataBaseTool.insert_img_tags_to_bodies('Article', 'tree', 987, '/assets/images/company_pictures/')
+  #    DataBaseTool.insert_img_tags_to_bodies('Article', 'tree', 990, '/assets/images/service_pictures/')
+  #    DataBaseTool.insert_img_tags_to_bodies('Article', 'id', 990, '/assets/images/service_pictures/')
+
+  ##
+  ##  insert_img_tags_to_bodies('Article', 23, '')
+  ##                                       (0) (внутри public: /i/imgs/)
+  
+  def self.insert_img_tags_to_bodies(model, srctype, src, img_folder_path)
+    m = eval "#{model.capitalize}"
+    case srctype
+    when 'id'
+      obs = m.find(src)
+    when 'parent'
+      obs = m.find(:all, :conditions => "parent_id=#{src.to_i}")
+    when 'tree'
+      obs = self.get_childrens(m, src, [])
+    when 'array'
+      obs = m.find(src)
+    when 'all'
+      obs = m.find(:all)
+    end
+    if obs.class.to_s != 'Array'
+      obs = [obs]
+    end
+
+    img1 = '<img alt="" src="' + img_folder_path;   img2 = '" />'
+
+    puts "   ========================>   #{obs.size}   "
+    obs.each do |ob|
+      puts "   ----------------------------------  #{ob.id} "
+      if File.exists?(Rails.root + 'public' + img_folder_path + ob.title)
+        img1 += ob.title + '/'      
+      end
+
+      if ob.body
+        ob.body.gsub!(/\[\[/, img1)
+        ob.body.gsub!(/\]\]/, img2)
+        ob.body += ' '
+      end
+
+      if ob.save!
+        puts "OK \n"
+      else
+        puts "NO \n"
+      end
+    end
+    puts "\nok\n"
+  end
+
+  ##  DataBaseTool.get_childrens(Article, parent_id, [])
+  def self.get_childrens(cl, id, arr)
+    obs = cl.find(:all, :conditions => "parent_id=#{id}")
+    obs.each do |e|
+      arr << e
+      arr = self.get_childrens(cl, e.id, arr)
+    end
+    arr
+  end
+
+  ##  DataBaseTool.get_childrens_ids(Article, parent_id, [])
+  def self.get_childrens_ids(cl, id, arr)
+    obs = cl.find(:all, :conditions => "parent_id=#{id}")
+    obs.each do |e|
+      arr << e.id
+      arr = self.get_childrens_ids(cl, e.id, arr)
+    end
+    arr
+  end
+
+  ##  DataBaseTool.output_hand_selected_pages(parent_id)
+  def self.output_hand_selected_pages(parent_id)
+    outfile = File.open("./output_hand_selected_pages.csv", "w")
+    outfile.puts "id\tparent_id\tposition\tis_shown_in_menu\ttitle\tUrl [Meta tag]"
+    self.get_childrens(Article, parent_id, []).each do |p|
+      txt = [p.id.to_s, p.parent_id.to_s, p.position.to_s, if p.is_shown_in_menu then 1 else 0 end, p.title.to_s, p.meta_tag.url.to_s].join("\t")
+      outfile.puts txt
+    end
+    outfile.close
+  end
+
+
+  ## зачистка привнесенного html
+  #   DataBaseTool.bodyhtm_clining_a(src)
+  def self.bodyhtm_clining_a(src)
+    Article.find(:all, :conditions => "parent_id=#{src}").each do |ob|
+      if ob.body
+        ob.body.gsub!(/<link[^>]+>/, '')
+        ob.body.gsub!(/<script[^>]+>/, '')
+        ob.body.gsub!(/<\/script>/, '')
+        ob.body.gsub!(/<a[^>]+>/, '')
+        ob.body.gsub!(/<\/a>/, '')
+        ob.body.gsub!(/ style="[^"]+"/, '')
+        ob.body.gsub!(/src="\/upload\/medialibrary\/[^\/]+\//, 'src="/assets/images/clicumvpic/')
+        ob.body.gsub!(/[^"]*[w|W]{3}[^"]*/, '')
+
+        ob.body += ' '
+        ob.save!
+      end
+    end
+    puts "\nok\n"
+  end
 
 
 end

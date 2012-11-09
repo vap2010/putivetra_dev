@@ -1,5 +1,7 @@
 class BrandsController < ApplicationController
   before_filter :find_meta_tag, :find_article, :find_selected_artcles
+  before_filter :get_topmenu_points
+
 
   def page
   end

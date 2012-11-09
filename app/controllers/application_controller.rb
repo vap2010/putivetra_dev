@@ -28,6 +28,11 @@ class ApplicationController < ActionController::Base
     end  
   end
 
+  def get_topmenu_points
+     @topmenu_points = Article.find([987, 988, 989, 990, 991, 992, 1002])
+     @topmenu_points << Article.find(994)
+  end
 
-    
+
+
 end

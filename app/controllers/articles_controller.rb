@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   #before_filter :find_meta_tag, :find_article, :only => :show
   before_filter :find_meta_tag, :find_article, :except => :index
+  before_filter :get_topmenu_points
   # layout "application"
 
   def index

@@ -15,6 +15,14 @@
 <script type="text/javascript" src="/assets/js/jquery-1.8.1.min.js"></script>-->
 <script type="text/javascript" src="/assets/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/assets/js/js.common.js"></script>
+
+<% if controller_name == "articles" and action_name == "index" -%>
+<%# script type="text/javascript" src="/assets/js/swfobject.js"></script %>
+<script language="javascript">AC_FL_RunContent = 0;</script>
+<script type="text/javascript" src="/assets/js/AC_RunActiveContent.js"></script>
+<!-- style media="screen" type="text/css">#main_page_bjn_flash {visibility:hidden}</style -->
+<% end -%>
+
 </head>
 
 <body>
@@ -68,14 +76,17 @@
   <div id="subheader"> 
     <!--header navigation-->
     <ul class="nav clearfix">
-      <li class="m1"><a href="/o_kompanii_puti_vetra.html" class="active">О компании Пути Ветра</a></li>
-      <li class="m2"><a href="/katalog_oborudovania.html">Каталог климатического оборудования</a></li>
-      <li class="m3"><a href="/firmy_i_brendi.html">Фирмы производителей оборудования</a></li>
-      <li class="m4"><a href="/servis_kondicionerov.html">link 3</a></li>
-      <li class="m5"><a href="/obzory.html">Обзоры по оборудованию</a></li>
-      <li class="m6"><a href="/stati.html">Статьи</a></li>
-      <li class="m7"><a href="/vacansii.html">Вакансии</a></li>
-      <li class="m8"><a href="/kontakty.html">Контакты</a></li>
+
+  <% if @topmenu_points -%>
+    <% ii = 0 -%>
+    <% @topmenu_points.each do |m| -%>
+      <% ii = ii + 1 -%>
+      <% if m.show_in_menu -%>
+      <% sel = ''; sel = ' class="active"' if @article and m == @article -%>
+      <li class="m<%= ii -%>"><a href="<%= m.url -%>"<%= raw sel -%>><%= m.title -%></a></li>
+      <% end -%>
+    <% end %>
+  <% end %>
     </ul>
     <!--header navigation end--> 
     <!--sitemap links-->
@@ -92,18 +103,18 @@
    <div class="header_slider"><%= render "layouts/page_top_bayan" -%></div>
    <!-- header slider end-->
   <% else %>
+   <% if @selected_items -%>
    <ul class="breadcrumbs clearfix">
     <li><a href=""><img src="/assets/images/breadcrumb_home.png" alt="" /></a></li>
     <% for item in @selected_items -%>
-      <% if item == @selected_items.last -%>
+     <% if item == @selected_items.last -%>
       <li class="last"> <a><%= item.title -%></a></li>
-      <% else -%>
+     <% else -%>
       <li><a href="<%= item.url -%>"><%= item.title -%></a></li>
-      <% end -%>
+     <% end -%>
     <% end -%>
-
-
    </ul>
+   <% end -%>
   <% end %>
 
   <!--wrap-->

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008100121) do
+ActiveRecord::Schema.define(:version => 20121029191200) do
 
   create_table "agencies", :force => true do |t|
     t.string   "title",      :null => false
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20121008100121) do
     t.string   "title",                                     :null => false
     t.text     "preview"
     t.text     "body"
+    t.string   "unikey"
   end
 
   add_index "articles", ["parent_id"], :name => "index_articles_on_parent_id"

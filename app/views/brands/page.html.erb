@@ -11,24 +11,16 @@
       </div>
       <div class="col_b clearfix">
         <div class="catitem_description">
-          <h2><a href="">Мультисплит-системы</a></h2>
-          <h3>СЕРИЯ DEFTY &bull; Настенный тип</h3>
-          <p><img src="" alt="" /></p>
 
+          <% if @article.body !~ /<[h|H]1>/ %>
+          <h1><%= @article.title  -%></h1>
+          <% end %>
 
+          <% tx = '<p class="salephone">Консультация и подбор оборудования по телефону: 8 (495) 662-58-76</p>'
 
-<hr>
-<%= @article.title  -%> /// <%= @article.meta_tag.url  -%>
-
-<hr>
-<%= @article.preview   -%>
-
-<hr>
-<%= raw @article.body   -%>
-
-<hr>
-
-
+             @article.body.gsub!(/<!--salephone-->/, tx) -%>
+          <%#= @article.preview   -%>
+          <%= raw @article.body   -%>
 
         </div>
       </div>
