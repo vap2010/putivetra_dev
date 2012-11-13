@@ -1,2 +1,42 @@
-<h1>Brands#subpage</h1>
-<p>Find me in app/views/brands/subpage.html.erb</p>
+  <!--wrap-->
+  <div id="wrap" class="col3_layout clearfix"> 
+    <!--content-->
+    <div class="content clearfix">
+      <div class="col_a col_a_catalog">
+        <%= render "shared/menu_left_page" -%>
+
+        <%#= render "shared/menu_left_yellow" -%>
+        
+        <%= render "shared/banners_left_yellow" -%>
+
+      </div>
+      <div class="col_b">
+        <div class="catalog_details">
+        
+          <% if @article.body !~ /<[h|H]1>/ %>
+          <h1><%= @article.title  -%></h1>
+          <% end %>
+
+          <% tx = '<p class="salephone">Консультация и подбор оборудования по телефону: 8 (495) 662-58-76</p>'
+             if @article and @article.body
+                @article.body.gsub!(/<!--salephone-->/, tx)
+             end
+          -%>
+          <%#= @article.preview   -%>
+          <%= raw @article.body   -%>
+          
+          <p><br /></p>
+
+        </div>
+  
+      </div>
+      <div class="col_c">
+      
+        <%= render "shared/banners_right" -%>
+
+      </div>
+    </div>
+    
+    <!--content end--> 
+  </div>
+  <!--wrap end--> 

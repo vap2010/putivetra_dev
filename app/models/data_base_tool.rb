@@ -230,26 +230,36 @@ class DataBaseTool
   ##  DataBaseTool.output_hand_selected_pages(parent_id)
   def self.output_hand_selected_pages(parent_id)
     outfile = File.open("./output_hand_selected_pages.csv", "w")
-    outfile.puts "id\tparent_id\tposition\tis_shown_in_menu\ttitle\tUrl [Meta tag]"
+    outfile.puts "id\tparent_id\tposition\tis_shown_in_menu\tunikey\ttitle\tUrl [Meta tag]"
     self.get_childrens(Article, parent_id, []).each do |p|
-      txt = [p.id.to_s, p.parent_id.to_s, p.position.to_s, if p.is_shown_in_menu then 1 else 0 end, p.title.to_s, p.meta_tag.url.to_s].join("\t")
+      txt = [p.id.to_s, p.parent_id.to_s, p.position.to_s, if p.is_shown_in_menu then 1 else 0 end,
+             p.unikey.to_s, p.title.to_s, p.meta_tag.url.to_s].join("\t")
       outfile.puts txt
     end
     outfile.close
   end
 
+  ##  DataBaseTool.copy_key_to_unikey('meta_tag.url')   # 'meta_tag.url'
+  def self.copy_key_to_unikey(key)
+    Article.all.each do |a|
+      a.unikey = eval("a.#{key}")
+      a.save
+    end
+    puts "\nok\n"
+  end
 
-  ## зачистка привнесенного html
+  ## зачистка привнесенного html - A
   #   DataBaseTool.bodyhtm_clining_a(src)
   def self.bodyhtm_clining_a(src)
     Article.find(:all, :conditions => "parent_id=#{src}").each do |ob|
       if ob.body
-        ob.body.gsub!(/<link[^>]+>/, '')
-        ob.body.gsub!(/<script[^>]+>/, '')
-        ob.body.gsub!(/<\/script>/, '')
-        ob.body.gsub!(/<a[^>]+>/, '')
-        ob.body.gsub!(/<\/a>/, '')
-        ob.body.gsub!(/ style="[^"]+"/, '')
+        ob.body.gsub!(/<link[^>]+>/, '')      # del <link ...>
+        ob.body.gsub!(/<script[^>]+>/, '')    # del <script ...>
+        ob.body.gsub!(/<\/script>/, '')       # del </script>
+        ob.body.gsub!(/<a[^>]+>/, '')         # del <a ...>
+        ob.body.gsub!(/<\/a>/, '')            # del </a>
+        ob.body.gsub!(/ style="[^"]+"/, '')   # del style="..."
+
         ob.body.gsub!(/src="\/upload\/medialibrary\/[^\/]+\//, 'src="/assets/images/clicumvpic/')
         ob.body.gsub!(/[^"]*[w|W]{3}[^"]*/, '')
 
@@ -259,6 +269,71 @@ class DataBaseTool
     end
     puts "\nok\n"
   end
+
+  ## зачистка привнесенного html - B
+  #   DataBaseTool.bodyhtm_clining_b(src)
+  def self.bodyhtm_clining_b(src)
+    Article.find(:all, :conditions => "parent_id=#{src}").each do |ob|
+      if ob.body
+        ob.body.gsub!(/<br="">/, '')                     # del <br="">
+        ob.body.gsub!(/\/&gt;/, '/>')                    # sub /&gt;  -> />
+        ob.body.gsub!(/<img[^<]*cblok_t\.jpg[^>]*/, '')  # del <img ... cblok_t.jpg" ...>
+        ob.body.gsub!(/<img[^<]*cblok_b\.jpg[^>]*/, '')  # del <img ... cblok_b.jpg" ...>
+        ob.body.gsub!(/<img[^<]*1_2\.gif[^>]*/, '')      # del <img ... 1_2.gif" ...>
+
+        ob.body.gsub!(/&gt;[ |\t]*alt=""[ |\t]*\/&gt;/, '')  # del 
+
+        ob.body.gsub!(/font-family:[^;];[ ]*"/, '')    # del style=font-family: ... "
+        ob.body.gsub!(/style="[ ]*"/, '')
+
+        ob.body += ' '
+        ob.save!
+      end
+    end
+    puts "\nok\n"
+  end
+
+  ## зачистка привнесенного html - C
+  #   DataBaseTool.bodyhtm_clining_c(src)
+  def self.bodyhtm_clining_c(src)
+    Article.find(:all, :conditions => "parent_id=#{src}").each do |ob|
+      if ob.body
+        ob.body.gsub!(/font-family:[^;];[ ]*/, '')    # del style="font-family: ... "
+        ob.body.gsub!(/style="[ ]*"/, '')
+
+        ob.body += ' '
+        ob.save!
+      end
+    end
+    puts "\nok\n"
+  end
+
+  #   DataBaseTool.select_ids_from_unikey
+  def self.select_ids_from_unikey
+    ar = %W{ vrf-sistemi
+montaj_kondicionerov-p23
+kondicioneri_dlya_serverov-p24
+arenda_kondicionerov-p99
+zapravka-kondicionera
+daikin-fankoil
+servis-kondicionerov
+servisnoe-obsluzhivanie-chillerov
+obsluzhivanie-split-sistem
+vrf-fujitsu
+vrv    }
+    outfile = File.open("./output_hand_selected_unikeys.csv", "w")
+    outfile.puts "id\tparent_id\tposition\tis_shown_in_menu\tunikey\ttitle\tUrl [Meta tag]"
+    ar.each do |key|
+      p = Article.find_by_unikey(key)
+      txt = [p.id.to_s, p.parent_id.to_s, p.position.to_s, if p.is_shown_in_menu then 1 else 0 end,
+             p.unikey.to_s, p.title.to_s, p.meta_tag.url.to_s].join("\t")
+      outfile.puts txt
+    end
+    outfile.close
+  end
+
+
+
 
 
 end

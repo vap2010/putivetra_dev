@@ -11,12 +11,16 @@ class ApplicationController < ActionController::Base
 
   def find_article
     @article = @meta_tag.metatagable
+    unless @article.is_published                      # ввести проверки 
+      redirect_to '/page404.html', :status => 404
+    end
    rescue
     @article = Article.new
   end
 
   def find_selected_artcles
     @selected_items = []
+    @selected_items_ids = []
     add_parent_item(@article) if @article and !@article.new_record?
     @selected_items
   end
@@ -24,6 +28,7 @@ class ApplicationController < ActionController::Base
   def add_parent_item(item)
     if item.parent
       @selected_items.unshift(item)
+      @selected_items_ids.unshift(item.id)
       add_parent_item(item.parent)
     end  
   end
@@ -33,6 +38,17 @@ class ApplicationController < ActionController::Base
      @topmenu_points << Article.find(994)
   end
 
+  def page404
+    unless @article.id
+      redirect_to '/page404.html', :status => 404 
+    end
+  end
+
+  def skin_select
+    if @article.skin_id == 1
+      render :subpage
+    end
+  end
 
 
 end

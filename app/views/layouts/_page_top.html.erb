@@ -15,6 +15,7 @@
 <script type="text/javascript" src="/assets/js/jquery-1.8.1.min.js"></script>-->
 <script type="text/javascript" src="/assets/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/assets/js/js.common.js"></script>
+<script src="//code.jivosite.ru/script/widget/556"></script>
 
 <% if controller_name == "articles" and action_name == "index" -%>
 <%# script type="text/javascript" src="/assets/js/swfobject.js"></script %>
@@ -26,6 +27,18 @@
 </head>
 
 <body>
+<!-- Yandex.Metrika counter -->
+<script src="http://mc.yandex.ru/metrika/watch.js"
+	type="text/javascript"></script>
+<div style="display: none;"><script type="text/javascript">
+	var yaCounter4551751 = new Ya.Metrika(4551751);
+	yaCounter4551751.clickmap(true);
+</script></div>
+<noscript>
+<div style="position: absolute"><img
+	src="http://mc.yandex.ru/watch/4551751" alt="" /></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
 
 <!--layout-->
 <div id="layout"> 
@@ -35,7 +48,7 @@
     <div class="logo"><a href="/"<%# title="seo title" -%>><%= article_title @meta_tag -%></a></div>
     <!--site logo end--> 
     <!--slogan-->
-    <div class="slogan">КОНДИЦИОНЕРЫ * ВЕНТИЛЯЦИЯ * ЭЛЕКТРООТОПЛЕНИЕ</div>
+    <div class="slogan">КОНДИЦИОНЕРЫ * ВЕНТИЛЯЦИЯ<%# * ЭЛЕКТРООТОПЛЕНИЕ -%></div>
     <!--slogan end--> 
     <!--phone-->
     <div class="phone"><span>(495)</span> 662-58-76</div>
@@ -43,12 +56,11 @@
     <!--description-->
     <div class="description"> климатическая компания <span>Официальный дилер</span> </div>
     <!--description end-->
-    <!--
-    <a href="" class="search_params">параметрический поиск</a>
-    -->
+    <a href="/searching.html" class="search_params">параметрический поиск</a>
     <!--cart-->
-    <div class="cart" style="display:none;">
+    <div class="cart">
       <div class="c">
+      <% if false -%>
         <div class="user_name"><span>Имя Фамилия</span> Добрый день!</div>
         <!--cart items-->
         <a href="" class="cart_items">
@@ -57,19 +69,23 @@
           <span class="col_b">На сумму<br />
             12 345 678 руб.</span>
         </a>
-        <!--cart items end--> 
+        <!--cart items end-->
+      <% else -%>
+        <div class="user_name"><span></span> Добрый день!</div>
+        <a x_href="" class="cart_items">
+          Ваша корзина пуста
+        </a>
+      <% end -%>
       </div>
     </div>
     <!--cart end--> 
     <!--search-->
-    <!--
-    <form action="index.html">
+    <form action="/searching.html">
       <div class="search">
         <input type="text" onfocus="if (this.value == 'введите слово или фразу для поиска...') { this.value=''; }" onblur="if (this.value == '') { this.value='введите слово или фразу для поиска...' }" value="введите слово или фразу для поиска..." />
         <input type="image" src="/assets/images/search_btn.png" />
       </div>
     </form>
-    -->
     <!--search end--> 
   </div>
   <!--header end-->
@@ -82,7 +98,7 @@
     <% @topmenu_points.each do |m| -%>
       <% ii = ii + 1 -%>
       <% if m.show_in_menu -%>
-      <% sel = ''; sel = ' class="active"' if @article and m == @article -%>
+      <% sel = ''; sel = ' class="active"' if @selected_items_ids and @selected_items_ids.include? m.id -%>
       <li class="m<%= ii -%>"><a href="<%= m.url -%>"<%= raw sel -%>><%= m.title -%></a></li>
       <% end -%>
     <% end %>
@@ -117,9 +133,6 @@
    <% end -%>
   <% end %>
 
-  <!--wrap-->
-  <div id="wrap" class="col3_layout col2_layout2 clearfix">
-
 
 <!--
 <head>
@@ -130,6 +143,4 @@
   <%#= javascript_include_tag "application" %>
   <%#= csrf_meta_tags %>
 </head>
-<h1>Putivetra</h1>
-<hr>
 -->

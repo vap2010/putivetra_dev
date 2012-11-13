@@ -55,6 +55,8 @@ Putivetra::Application.routes.draw do
   match ':id.html',         :to => "brands#page",    :as => :page
   match ':id/:subcat.html', :to => "brands#subpage", :as => :subpage
 
+  match ':id',         :to => "brands#page",    :as => :page404
+
  # match ':id/:series'        => 'brands#series'
  # match ':id/:series/:block' => 'brands#block'
 

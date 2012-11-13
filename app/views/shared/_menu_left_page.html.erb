@@ -9,7 +9,8 @@
             <% if item.show_in_menu -%>
               <% sel = ''; sel = ' class="active"' if second_item and second_item == item -%>
               <li><a href="<%= item.url -%>"<%= raw sel -%>><%= item.title -%></a>
-                <% if item.children.size > 0 and item.show_childrens_in_menu -%>
+               <% if @selected_items_ids.include? item.id %>
+               <% if item.children.size > 0 and item.show_childrens_in_menu -%>
                 <ul>
                 <% for item2 in item.children -%>
                 <% if item2.show_in_menu -%>
@@ -18,7 +19,8 @@
                 <% end -%>
                 <% end -%>
                 </ul>
-                <% end -%>
+               <% end -%>
+               <% end -%>
               </li>
             <% end -%>
             <% end -%>

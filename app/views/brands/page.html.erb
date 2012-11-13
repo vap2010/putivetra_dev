@@ -1,3 +1,5 @@
+  <!--wrap-->
+  <div id="wrap" class="col3_layout col2_layout2 clearfix">
     <!--content-->
     <div class="content clearfix">
       <div class="col_a col_a_catalog">
@@ -17,8 +19,10 @@
           <% end %>
 
           <% tx = '<p class="salephone">Консультация и подбор оборудования по телефону: 8 (495) 662-58-76</p>'
-
-             @article.body.gsub!(/<!--salephone-->/, tx) -%>
+             if @article and @article.body
+                @article.body.gsub!(/<!--salephone-->/, tx)
+             end
+          -%>
           <%#= @article.preview   -%>
           <%= raw @article.body   -%>
 
@@ -27,6 +31,8 @@
     </div>
     
     <!--content end--> 
+  </div>
+  <!--wrap end--> 
 
 
 
