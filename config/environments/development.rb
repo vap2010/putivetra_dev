@@ -45,5 +45,10 @@ Putivetra::Application.configure do
 ##  # config.assets.manifest = YOUR_PATH
 
 
+  # определяет метод доставки. Допустимыми значениями являются :smtp (по умолчанию), :sendmail и :test
+  config.action_mailer.delivery_method = :sendmail
+  # определяет, должна ли почта фактически доставляться. По умолчанию true; удобно установить ее false при тестировании.
+  config.action_mailer.perform_deliveries = true
+
 
 end

@@ -11,11 +11,12 @@ Putivetra::Application.routes.draw do
 
   Brand.find(:all).each do |b|
     burl = b.meta_tag.url.downcase.to_s
-    match  burl + '.html'            => 'brands#brand_index',  :brand => "#{b.id}", :as => "#{burl}_index".to_sym
-    match  burl + '/:cat.html'       => 'brands#brand_category',  :brand => "#{b.id}",  :as => "#{burl}_category".to_sym
-    match  burl + '/:cat/:subcat.html'  => 'brands#brand_subcategory',  :brand => "#{b.id}", :as => "#{burl}_subcategory".to_sym
-    match  burl + '/:cat/:subcat/:series.html'  => 'brands#brand_series',  :brand => "#{b.id}", :as => "#{burl}_series".to_sym
-    match  burl + '/:cat/:subcat/:series/:block.html'  => 'brands#brand_block',  :brand => "#{b.id}", :as => "#{burl}_block".to_sym
+    brout = 'r_' + burl.gsub(/-/, '_')
+    match  burl + '.html'            => 'brands#brand_index',  :brand => "#{b.id}", :as => "#{brout}_index".to_sym
+    match  burl + '/:cat.html'       => 'brands#brand_category',  :brand => "#{b.id}",  :as => "#{brout}_category".to_sym
+    match  burl + '/:cat/:subcat.html'  => 'brands#brand_subcategory',  :brand => "#{b.id}", :as => "#{brout}_subcategory".to_sym
+    match  burl + '/:cat/:subcat/:series.html'  => 'brands#brand_series',  :brand => "#{b.id}", :as => "#{brout}_series".to_sym
+    match  burl + '/:cat/:subcat/:series/:block.html'  => 'brands#brand_block',  :brand => "#{b.id}", :as => "#{brout}_block".to_sym
   end
 
   get  'katalog_oborudovania.html'  => 'brands#katalog_index', :as => :katalog_index

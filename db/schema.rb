@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029191200) do
+ActiveRecord::Schema.define(:version => 20121117210500) do
 
   create_table "agencies", :force => true do |t|
     t.string   "title",      :null => false
@@ -158,15 +158,26 @@ ActiveRecord::Schema.define(:version => 20121029191200) do
     t.string   "manager_email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position",                :default => 1,     :null => false
+    t.boolean  "is_shown_in_menu",        :default => false, :null => false
+    t.string   "unikey"
+    t.integer  "skin_id"
+    t.boolean  "is_published",            :default => true,  :null => false
   end
 
   create_table "categories", :force => true do |t|
-    t.string   "title",       :null => false
+    t.string   "title",                                     :null => false
     t.integer  "parent_id"
     t.text     "preview"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position",               :default => 1,     :null => false
+    t.boolean  "is_published",           :default => true,  :null => false
+    t.boolean  "is_shown_in_menu",       :default => false, :null => false
+    t.boolean  "are_children_published", :default => true,  :null => false
+    t.string   "unikey"
+    t.integer  "skin_id"
   end
 
   add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
@@ -191,6 +202,7 @@ ActiveRecord::Schema.define(:version => 20121029191200) do
     t.datetime "published_until"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "unikey"
   end
 
   create_table "features", :force => true do |t|

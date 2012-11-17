@@ -16,6 +16,8 @@ class BrandsController < ApplicationController
   end
 
   def brands_index
+
+  
   end
 
   def brand_index

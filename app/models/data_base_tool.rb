@@ -1,21 +1,44 @@
 class DataBaseTool
   ############################ mass DB tools ##############################
+  #                           DataBaseTool.all_main_trees_output
   # build and edit pages  --  DataBaseTool.add_data_to_model_from_csv('Article', '')
   ##                          DataBaseTool.get_childrens(Article, parent_id, [])
   ##                          DataBaseTool.get_childrens_ids(Article, parent_id, [])
-  # output_hand_selected_pages.csv  --  DataBaseTool.output_hand_selected_pages(parent_id)
-
+  # output_hand_selected_pages.csv  --  DataBaseTool.output_pages_tree_by_parent_id(parent_id)
 
   ############################ /mass DB tools #############################
 
   @@default_data_path = '/application/rails/putivetra_dev/tmp/vap_tools_work/'
 
+  #   987  О компании "Пути Ветра"
+  #   988  Каталог климатического оборудования
+  #   989  Фирмы - ведущие производители климатического оборудования
+  #   990  Услуги компании Пути Ветра
+  #   991  Обзоры климатического оборудования
+  #   992  Статьи по кондиционированию и вентиляции
+  #   993  Служебные страницы сайта
+  #     2  Вторая тест страница
+  #     3  3-я тест страница
+  #  1171  Страницы старого сайта
+
+  #  DataBaseTool.all_main_trees_output
+  def self.all_main_trees_output
+    [987, 988, 989, 990, 991, 992].each do |pid|
+      DataBaseTool.output_pages_tree_by_parent_id(pid)
+    end
+  end
+
+  #  DataBaseTool.contents_output
+  def self.contents_output
+    self.output_brands_list
+    self.output_events_list
+    self.output_categories_tree
+  end
 
   #  rake vap_tools:add_data_to_model_from_csv model=Vacancy file=abc.txt --trace
   #  DataBaseTool.add_data_to_model_from_csv('Vacancy', '/application/rails/putivetra_dev/tmp/vap_tools_work/abc.txt')
   #  DataBaseTool.add_data_to_model_from_csv('Article', '')
   # 
-
   def self.add_data_to_model_from_csv(model, file)
     if file.class.to_s == 'Pathname' and file.size? > 0
       #file = @@default_data_path + "#{file}"
@@ -159,7 +182,7 @@ class DataBaseTool
 
   #    DataBaseTool.insert_img_tags_to_bodies('Article', 'tree', 987, '/assets/images/company_pictures/')
   #    DataBaseTool.insert_img_tags_to_bodies('Article', 'tree', 990, '/assets/images/service_pictures/')
-  #    DataBaseTool.insert_img_tags_to_bodies('Article', 'id', 990, '/assets/images/service_pictures/')
+  #    DataBaseTool.insert_img_tags_to_bodies('Article', 'id',   990, '/assets/images/service_pictures/')
 
   ##
   ##  insert_img_tags_to_bodies('Article', 23, '')
@@ -227,17 +250,116 @@ class DataBaseTool
     arr
   end
 
-  ##  DataBaseTool.output_hand_selected_pages(parent_id)
-  def self.output_hand_selected_pages(parent_id)
-    outfile = File.open("./output_hand_selected_pages.csv", "w")
-    outfile.puts "id\tparent_id\tposition\tis_shown_in_menu\tunikey\ttitle\tUrl [Meta tag]"
-    self.get_childrens(Article, parent_id, []).each do |p|
-      txt = [p.id.to_s, p.parent_id.to_s, p.position.to_s, if p.is_shown_in_menu then 1 else 0 end,
-             p.unikey.to_s, p.title.to_s, p.meta_tag.url.to_s].join("\t")
+  ############################################################  Events
+  ##  DataBaseTool.output_events_list
+  def self.output_events_list
+    outfile = File.open("./tmp/vap_output_pages/output_events_list.csv", "w")
+    txt = ['id',                   'is_published',
+           'is_shown_in_menu',     'unikey',        'title',
+           'is_preview_published', 'preview_length',
+           'body_length',          'skin_id',
+           'published_at',         'published_until',
+           'Url [Meta tag]',          'Title [Meta tag]',
+           'Description [Meta tag]',  'Keywords [Meta tag]'].join("\t")
+    outfile.puts txt
+    
+    Event.find(:all).each do |p|
+      txt = [p.id.to_s,                              self.bultonum(p.is_published),
+             self.bultonum(p.is_shown_in_menu),      p.unikey.to_s,    p.title.to_s,
+             self.bultonum(p.is_preview_published),  self.text_length_if(p.preview),
+             self.text_length_if(p.body),            p.skin_id.to_s,
+             p.published_at.to_s,         p.published_until.to_s,
+             p.meta_tag.url.to_s,         p.meta_tag.title.to_s,
+             p.meta_tag.description,      p.meta_tag.keywords].join("\t")
       outfile.puts txt
     end
     outfile.close
   end
+
+  ############################################################  Brands
+  ##  DataBaseTool.output_brands_list
+  def self.output_brands_list
+    outfile = File.open("./tmp/vap_output_pages/output_brands_list.csv", "w")
+    txt = ['id',   'position', 'is_published',
+           'is_shown_in_menu',       'unikey',
+           'title',         'preview_length',
+           'description_length',     'skin_id',
+           'foundation_year',      'country',
+           'speciality',           'price_band',
+           'Url [Meta tag]',         'Title [Meta tag]',
+           'Description [Meta tag]', 'Keywords [Meta tag]'].join("\t")
+    outfile.puts txt
+
+    Brand.find(:all).each do |p|
+      txt = [p.id.to_s,  p.position.to_s, self.bultonum(p.is_published),
+             self.bultonum(p.is_shown_in_menu),       p.unikey.to_s,
+             p.title.to_s,             self.text_length_if(p.preview),
+             self.text_length_if(p.description),      p.skin_id.to_s,
+             p.foundation_year.to_s,    p.country.to_s,
+             p.speciality.to_s,         p.price_band.to_s,
+             p.meta_tag.url.to_s,       p.meta_tag.title.to_s,
+             p.meta_tag.description,    p.meta_tag.keywords].join("\t")
+      outfile.puts txt
+    end
+    outfile.close
+  end
+
+  ############################################################  Categories
+  ##  DataBaseTool.output_categories_tree
+  def self.output_categories_tree
+    outfile = File.open("./tmp/vap_output_pages/output_categories_tree.csv", "w")
+    txt = ['id', 'parent_id', 'position', 'is_published',
+           'is_shown_in_menu',       'unikey',
+           'are_children_published', 'title',      'preview_length',
+           'description_length',     'skin_id',
+           'Url [Meta tag]',         'Title [Meta tag]',
+           'Description [Meta tag]', 'Keywords [Meta tag]'].join("\t")
+    outfile.puts txt
+
+    self.get_childrens(Category, 1, []).each do |p|
+      txt = [p.id.to_s, p.parent_id.to_s, p.position.to_s, self.bultonum(p.is_published),
+             self.bultonum(p.is_shown_in_menu),       p.unikey.to_s,
+             self.bultonum(p.are_children_published), p.title.to_s,  self.text_length_if(p.preview),
+             self.text_length_if(p.description), p.skin_id.to_s,
+             p.meta_tag.url.to_s,         p.meta_tag.title.to_s,
+             p.meta_tag.description,      p.meta_tag.keywords].join("\t")   
+      outfile.puts txt
+    end
+    outfile.close
+  end
+
+  ############################################################  Pages - Articles
+  ##  DataBaseTool.output_hand_selected_pages(parent_id)
+  def self.output_pages_tree_by_parent_id(parent_id)
+    outfile = File.open("./tmp/vap_output_pages/output_pages_tree_by_#{parent_id}root.csv", "w")
+    txt = ['id', 'parent_id', 'position', 'is_published',
+           'is_shown_in_menu',       'unikey',
+           'are_children_published', 'title',
+           'is_preview_published',   'preview_length',
+           'body_length',            'skin_id',
+           'Url [Meta tag]',         'Title [Meta tag]',
+           'Description [Meta tag]', 'Keywords [Meta tag]'].join("\t")
+    outfile.puts txt
+
+    self.get_childrens(Article, parent_id, []).each do |p|
+      txt = [p.id.to_s, p.parent_id.to_s, p.position.to_s, self.bultonum(p.is_published),
+             self.bultonum(p.is_shown_in_menu),       p.unikey.to_s,
+             self.bultonum(p.are_children_published), p.title.to_s,
+             self.bultonum(p.is_preview_published),   self.text_length_if(p.preview),
+             self.text_length_if(p.body), p.skin_id.to_s,
+             p.meta_tag.url.to_s,         p.meta_tag.title.to_s,
+             p.meta_tag.description,      p.meta_tag.keywords].join("\t")   
+      outfile.puts txt
+    end
+    outfile.close
+  end
+  def self.bultonum(b)
+    (if b then 1 else 0 end).to_s
+  end
+  def self.text_length_if(txt)
+    if(txt) then txt.length.to_s else '' end
+  end
+  ############################################################  //Pages - Articles
 
   ##  DataBaseTool.copy_key_to_unikey('meta_tag.url')   # 'meta_tag.url'
   def self.copy_key_to_unikey(key)
