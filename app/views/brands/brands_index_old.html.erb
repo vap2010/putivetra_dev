@@ -1,0 +1,90 @@
+  <!--wrap-->
+  <div id="wrap" class="col2_layout clearfix"> 
+    <!--content-->
+    <div class="inner_columns clearfix"> 
+      <!--index columns-->
+      
+      <div class="catalog_link"><a href="">КАТАЛОГ КЛИМАТИЧЕСКОГО ОБОРУДОВАНИЯ</a></div>
+      <div class="col_a">
+        <ul class="catalog">
+          <li> <a href="">Бытовые кондиционеры</a>
+            <ul>
+              <li><a href="">Сплит-системы</a></li>
+              <li><a href="">Мультисплит-системы</a></li>
+              <li><a href="">Настенные </a></li>
+              <li><a href="">Кассетные</a></li>
+              <li><a href="">Канальные</a></li>
+              <li><a href="">Консольные</a></li>
+              <li><a href="">Напольные</a></li>
+              <li><a href="">Потолочные</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Промышленные кондиционеры</a>
+            <ul>
+              <li><a href="">Мультизональные системы VRV-VRF</a></li>
+              <li><a href="">Системы Чиллер-Фанкойл</a></li>
+              <li><a href="">Центральные кондиционеры </a></li>
+              <li><a href="">Руфтоп, крышные кондиционеры </a></li>
+              <li><a href="">Шкафные кондиционеры</a></li>
+              <li><a href="">Прецизионные кондиционеры</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Вентиляция</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Увлажнители</a>
+            <ul>
+              <li><a href="">установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Очистители воздуха</a>
+          </li>
+          <li> <a href="">Осушители</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col_b">
+        <div class="catalog_brand_page">
+
+        <% for brand in @brands %>
+        <div style="width:380px; display:block; clear:both;">
+          <img alt="" src="<%= brand.logo_large.url -%>" align="left" width="120" height="80" />
+          <p>
+            <a style="font-size:9px; background-color:#eee;" href="<%= brand.article.url -%>"> Описание <%= raw brand.title -%> </a>
+            <% if brand.article.children %>  |
+              <a style="font-size:9px; background-color:#eee;" href="<%= brand.article.children[0].url -%>">История <%= raw brand.title -%></a>
+            <% end %>
+            <br />
+            <a href="<%= brand.url -%>">
+              <big><%= brand.id -%>. <%= raw brand.title -%></big><br />
+              <%= brand.foundation_year.to_s -%> - <%= brand.country.to_s if brand.country -%>
+            </a>
+          </p>
+        </div>
+        <% end %>
+
+
+
+        <!--
+          <div class="brandd_logo"><img src="/assets/images/brand_1_1.jpg" alt="" /></div>
+          <img src="/assets/images/del.jpg" alt="" /> <img src="/assets/images/del.jpg" alt="" /> <img src="/assets/images/del.jpg" alt="" />
+          <p><strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.</p>
+          <img src="/assets/images/del2.jpg" alt="" />
+          <p><strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.</p>
+        -->
+
+
+
+        </div>
+      </div>
+      <!--index columns end-->
+      
+      <%#= render "shared/banners_bottom_vrv" -%>
+
+    </div>
+    <!--content end--> 
+  </div>
+  <!--wrap end--> 

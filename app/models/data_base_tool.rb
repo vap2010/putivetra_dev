@@ -263,7 +263,7 @@ class DataBaseTool
            'Description [Meta tag]',  'Keywords [Meta tag]'].join("\t")
     outfile.puts txt
     
-    Event.find(:all).each do |p|
+    Event.all.each do |p|
       txt = [p.id.to_s,                              self.bultonum(p.is_published),
              self.bultonum(p.is_shown_in_menu),      p.unikey.to_s,    p.title.to_s,
              self.bultonum(p.is_preview_published),  self.text_length_if(p.preview),
@@ -276,6 +276,9 @@ class DataBaseTool
     outfile.close
   end
 
+
+  ############################################################  Brands.Position to Articles
+  #   Brand.all.each do |b| b.article.position = b.position; b.article.save end; puts ''
   ############################################################  Brands
   ##  DataBaseTool.output_brands_list
   def self.output_brands_list
@@ -283,19 +286,21 @@ class DataBaseTool
     txt = ['id',   'position', 'is_published',
            'is_shown_in_menu',       'unikey',
            'title',         'preview_length',
-           'description_length',     'skin_id',
+           'description_length',   'article_id',  'skin_id',
            'foundation_year',      'country',
+           'has_cond',              'has_vent',
            'speciality',           'price_band',
            'Url [Meta tag]',         'Title [Meta tag]',
            'Description [Meta tag]', 'Keywords [Meta tag]'].join("\t")
     outfile.puts txt
 
-    Brand.find(:all).each do |p|
+    Brand.all.each do |p|
       txt = [p.id.to_s,  p.position.to_s, self.bultonum(p.is_published),
              self.bultonum(p.is_shown_in_menu),       p.unikey.to_s,
              p.title.to_s,             self.text_length_if(p.preview),
-             self.text_length_if(p.description),      p.skin_id.to_s,
+             self.text_length_if(p.description),   p.article_id.to_s,   p.skin_id.to_s,
              p.foundation_year.to_s,    p.country.to_s,
+             self.bultonum(p.has_cond), self.bultonum(p.has_vent),
              p.speciality.to_s,         p.price_band.to_s,
              p.meta_tag.url.to_s,       p.meta_tag.title.to_s,
              p.meta_tag.description,    p.meta_tag.keywords].join("\t")

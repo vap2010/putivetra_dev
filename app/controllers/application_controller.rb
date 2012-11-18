@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
-
+  before_filter :get_topmenu_points
+  
 
   private
   
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def find_article
     @article = @meta_tag.metatagable
-    unless @article.is_published                      # ââåñòè ïðîâåðêè 
+    unless @article.is_published                      # Ð²Ð²ÐµÑÑ‚Ð¸ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ¸ 
       redirect_to '/page404.html', :status => 404
     end
    rescue
@@ -30,12 +30,13 @@ class ApplicationController < ActionController::Base
       @selected_items.unshift(item)
       @selected_items_ids.unshift(item.id)
       add_parent_item(item.parent)
-    end  
+    end
   end
 
   def get_topmenu_points
      @topmenu_points = Article.find([987, 988, 989, 990, 991, 992, 1002])
      @topmenu_points << Article.find(994)
+     @topmenu_points[2].meta_tag.url = 'firmy_i_brendi'
   end
 
   def page404
@@ -48,6 +49,13 @@ class ApplicationController < ActionController::Base
     if @article.skin_id == 1
       render :subpage
     end
+  end
+
+  def get_article(article_id)
+    @article = Article.find(article_id)
+    @meta_tag = @article.meta_tag
+    find_selected_artcles
+    page404
   end
 
 

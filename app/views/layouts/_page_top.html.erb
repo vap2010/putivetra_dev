@@ -2,9 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Пути Ветра | <%= article_title @meta_tag -%></title>
+<title><%= article_title @meta_tag -%> Пути Ветра</title>
 <meta name="description" content="<%= article_description @meta_tag -%>">
 <meta name="keywords" content="<%= article_keywords @meta_tag -%>">
+<meta name="autor" content="Вадим, Максим sale@putivetra.ru">
+<meta name="copyright" content="ООО Пути Ветра, кондиционирование и вентиляция" />
 <link href="/assets/css/reset.css" rel="stylesheet" type="text/css" media="all" />
 <link href="/assets/css/fonts/fonts.css" rel="stylesheet" type="text/css" media="all" />
 <link href="/assets/css/typography.css" rel="stylesheet" type="text/css" media="all" />
@@ -48,7 +50,7 @@
     <div class="logo"><a href="/"<%# title="seo title" -%>><%= article_title @meta_tag -%></a></div>
     <!--site logo end--> 
     <!--slogan-->
-    <div class="slogan">КОНДИЦИОНЕРЫ * ВЕНТИЛЯЦИЯ<%# * ЭЛЕКТРООТОПЛЕНИЕ -%></div>
+    <div class="slogan">КОНДИЦИОНЕРЫ * ВЕНТИЛЯЦИЯ * VRV-VRF СИСТЕМЫ<%# * ЭЛЕКТРООТОПЛЕНИЕ -%></div>
     <!--slogan end--> 
     <!--phone-->
     <div class="phone"><span>(495)</span> 662-58-76</div>
@@ -124,15 +126,21 @@
     <li><a href=""><img src="/assets/images/breadcrumb_home.png" alt="" /></a></li>
     <% for item in @selected_items -%>
      <% if item == @selected_items.last -%>
-      <li class="last"> <a><%= item.title -%></a></li>
+       <li class="last"> <a><%= item.title -%></a></li>
      <% else -%>
-      <li><a href="<%= item.url -%>"><%= item.title -%></a></li>
+       <% if item.show_in_menu %>
+         <li><a href="<%= item.url -%>"><%= item.title -%></a></li>
+       <% end %>
      <% end -%>
     <% end -%>
    </ul>
    <% end -%>
   <% end %>
 
+<div style="color: red; text-align: center;">
+Внимание! Редизайн сайта находится в стадии активной доработки. Некоторые функции могут не работать.
+<br />Просим простить за доставленные неудобства. По всем вопросам, пожалуйста, звоните в офис: 8 495 662-58-76
+</div>
 
 <!--
 <head>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117210500) do
+ActiveRecord::Schema.define(:version => 20121118225600) do
 
   create_table "agencies", :force => true do |t|
     t.string   "title",      :null => false
@@ -163,6 +163,9 @@ ActiveRecord::Schema.define(:version => 20121117210500) do
     t.string   "unikey"
     t.integer  "skin_id"
     t.boolean  "is_published",            :default => true,  :null => false
+    t.integer  "article_id"
+    t.boolean  "has_cond"
+    t.boolean  "has_vent"
   end
 
   create_table "categories", :force => true do |t|

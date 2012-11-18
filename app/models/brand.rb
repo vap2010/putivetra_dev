@@ -14,6 +14,7 @@ class Brand < ActiveRecord::Base
   has_many :distributors, :through => :brand_distributors
   has_many :brand_files, :dependent => :destroy
   has_many :price_files, :dependent => :destroy
+  belongs_to :article
 
   def speciality_enum
     ['low', 'medium', 'high']
@@ -22,4 +23,10 @@ class Brand < ActiveRecord::Base
   def price_band_enum
     ['low', 'medium', 'high']
   end
+
+  def url
+    '/' + meta_tag.url + '.html'
+  end
+
+
 end
