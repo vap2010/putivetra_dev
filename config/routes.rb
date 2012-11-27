@@ -10,7 +10,7 @@ Putivetra::Application.routes.draw do
   get  'firmy_i_brendi.html'  => 'brands#brands_index', :as => :brands_index
 
   Brand.find(:all).each do |b|
-    burl = b.meta_tag.url.downcase.to_s
+    burl = b.meta_tag.url.downcase.to_s.gsub(/^[_]*/, '')
     brout = 'r_' + burl.gsub(/-/, '_')
     match  burl + '.html'            => 'brands#brand_index',  :brand => "#{b.id}", :as => "#{brout}_index".to_sym
     match  burl + '/:cat.html'       => 'brands#brand_category',  :brand => "#{b.id}",  :as => "#{brout}_category".to_sym
@@ -18,15 +18,17 @@ Putivetra::Application.routes.draw do
     match  burl + '/:cat/:subcat/:series.html'  => 'brands#brand_series',  :brand => "#{b.id}", :as => "#{brout}_series".to_sym
     match  burl + '/:cat/:subcat/:series/:block.html'  => 'brands#brand_block',  :brand => "#{b.id}", :as => "#{brout}_block".to_sym
   end
-
+  
   get  'katalog_oborudovania.html'  => 'brands#katalog_index', :as => :katalog_index
+  get  'katalog_db.html'            => 'brands#katalog_db',    :as => :katalog_db
 
   Category.roots[0].children.each do |c|
     if c.meta_tag
       caturl = c.meta_tag.url.downcase.to_s
-      match  caturl + '.html'       => 'brands#category',  :cat_id => "#{c.id}", :as => "cat_#{c.id}".to_sym
-      match  caturl + '/:subcat.html'     => 'brands#subcategory',  :brand => "#{c.id}", :as => "subcat_#{c.id}".to_sym
-      match  caturl + '/:subcat/:series.html'   => 'brands#series',  :brand => "#{c.id}", :as => "series_#{c.id}".to_sym
+      match  caturl + '.html'       => 'brands#category',          :cat_id => "#{c.id}", :as => "cat_#{c.id}".to_sym
+      match  caturl + '/:subcat.html'     => 'brands#subcategory',  :cat_id => "#{c.id}", :as => "subcat_#{c.id}".to_sym
+      match  caturl + '/:subcat/:series.html'   => 'brands#brand_series',  :cat_id => "#{c.id}",  :as => "series_#{c.id}".to_sym
+    #  match  caturl + '/:subcat/:sscat/:series.html' => 'brands#subcategory', :cat_id => "#{c.id}", :as => "sscat_#{c.id}".to_sym
     end
   end
  
@@ -54,7 +56,7 @@ Putivetra::Application.routes.draw do
   match  'slovar/:id/:letter/:word.html' => 'dictionaries#slovar_word',   :as => :slovar_word
 
   match ':id.html',         :to => "brands#page",    :as => :page
-  match ':id/:subcat.html', :to => "brands#subpage", :as => :subpage
+  match ':id/:supage.html', :to => "brands#subpage", :as => :subpage
 
   match ':id',         :to => "brands#page",    :as => :page404
 

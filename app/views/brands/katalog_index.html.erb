@@ -1,3 +1,5 @@
+  <!--wrap-->
+  <div id="wrap" class="col3_layout col2_layout2 clearfix">
     <!--content-->
     <div class="content"> 
       <!--index columns-->
@@ -6,168 +8,137 @@
         <div class="col_left"> 
           <!--category_block-->
           <div class="category_block clearfix">
-            <h2><a x_href="/katalog_oborudovania.html">Бытовые кондиционеры</a></h2>
+            <h2><a href="/bytovie-kondicionery.html">Бытовые кондиционеры</a></h2>
             <div class="row row_2i clearfix">
-              <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_split_img_pic.jpg" alt="" /> Сплит системы</a>
-              <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_multi_split_01_245.jpg" alt="" /> Мультисплит-системы</a> </div>
-            <div class="row clearfix"> <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_nastennyi_split_img1930.jpg" alt="" /> Настенные</a>
-                                       <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_kasset_01_293.jpg" alt="" /> Кассетные</a>
-                                       <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_kanaln_01_362.jpg" alt="" /> Канальные</a> </div>
-            <div class="row clearfix"> <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_napolnyi_02_240.jpg" alt="" /> Консольные</a>
-                                       <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_previewrmob_conds.jpg" alt="" /> Мобильные</a>
-                                       <a x_href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_potolochn_01_378.jpg" alt="" /> Потолочные</a> </div>
+              <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_split_img_pic.jpg" alt="" /> Сплит системы</a>
+              <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_multi_split_01_245.jpg" alt="" /> Мультисплит-системы</a> </div>
+            <div class="row clearfix"> <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_nastennyi_split_img1930.jpg" alt="" /> Настенные</a>
+                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_kasset_01_293.jpg" alt="" /> Кассетные</a>
+                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_kanaln_01_362.jpg" alt="" /> Канальные</a> </div>
+            <div class="row clearfix"> <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_napolnyi_02_240.jpg" alt="" /> Консольные</a>
+                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_previewrmob_conds.jpg" alt="" /> Мобильные</a>
+                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_potolochn_01_378.jpg" alt="" /> Потолочные</a> </div>
           </div>
           <!--category_block end--> 
           <!--category_list-->
           <div class="category_list clearfix">
             <div class="item clearfix">
-              <h2><a x_href="/katalog_oborudovania.html">Промышленные кондиционеры</a></h2>
-              <a x_href="/katalog_oborudovania.html"><img src="/assets/images/main_page/web_prom_cond_105.jpg" alt="" /></a>
-              <p><a x_href="/katalog_oborudovania.html" class="item">Мультизональные системы VRV-VRF</a> <br />
-                 <a x_href="/katalog_oborudovania.html" class="item">Системы Чиллер-Фанкойл</a>           <br />
-                 <a x_href="/katalog_oborudovania.html" class="item">Центральные кондиционеры</a>         <br />
-                 <a x_href="/katalog_oborudovania.html" class="item">Руфтоп, крышные кондиционеры</a>     <br />
-                 <a x_href="/katalog_oborudovania.html" class="item">Шкафные кондиционеры</a>             <br />
-                 <a x_href="/katalog_oborudovania.html" class="item">Прецизионные кондиционеры</a>
+              <h2><a href="/polypromishlennye-kondicionery.html">Полупромышленные кондиционеры</a></h2>
+              <a href="/polypromishlennye-kondicionery.html"><img src="/assets/images/main_page/web_prom_cond_105.jpg" alt="" /></a>
+              <p>
+                <% for c in @categories[1].children %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
+                 <!--
+                 <a href="/katalog_oborudovania.html" class="item">Мультизональные системы VRV-VRF</a> <br />
+                 <a href="/katalog_oborudovania.html" class="item">Системы Чиллер-Фанкойл</a>           <br />
+                 <a href="/katalog_oborudovania.html" class="item">Центральные кондиционеры</a>         <br />
+                 <a href="/katalog_oborudovania.html" class="item">Руфтоп, крышные кондиционеры</a>     <br />
+                 <a href="/katalog_oborudovania.html" class="item">Шкафные кондиционеры</a>             <br />
+                 <a href="/katalog_oborudovania.html" class="item">Прецизионные кондиционеры</a>
+                 -->
               </p>
             </div>
             <div class="item clearfix">
-              <h2><a x_href="/katalog_oborudovania.html">Вентиляция</a></h2>
-              <a x_href="/katalog_oborudovania.html"><img src="/assets/images/main_page/web_ventil_105.jpg" alt="" /></a>
-              <p>Приточно-вытяжная вентиляция
-                Наборные приточно-вытяжные установки </p>
+              <h2><a href="/promishlennye-kondicionery.html">Промышленные кондиционеры</a></h2>
+              <p>
+              <a href="/promishlennye-kondicionery.html"><img src="/assets/images/main_page/web_prom_cond_105.jpg" alt="" /></a>
+                <% for c in @categories[2].children %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
+                 <!--
+                 <a href="/katalog_oborudovania.html" class="item">Мультизональные системы VRV-VRF</a> <br />
+                 <a href="/katalog_oborudovania.html" class="item">Системы Чиллер-Фанкойл</a>           <br />
+                 <a href="/katalog_oborudovania.html" class="item">Центральные кондиционеры</a>         <br />
+                 <a href="/katalog_oborudovania.html" class="item">Руфтоп, крышные кондиционеры</a>     <br />
+                 <a href="/katalog_oborudovania.html" class="item">Шкафные кондиционеры</a>             <br />
+                 <a href="/katalog_oborudovania.html" class="item">Прецизионные кондиционеры</a>
+                 -->
+              </p>
+            </div>
+            <div class="item clearfix">
+              <h2><a href="/ventilyacia.html">Вентиляция</a></h2>
+              <a href="/katalog_oborudovania.html"><img src="/assets/images/main_page/web_ventil_105.jpg" alt="" /></a>
+              <p>
+                <% for c in @categories[3].children %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
+
+                <!-- Приточно-вытяжная вентиляция
+                Наборные приточно-вытяжные установки  -->
+              </p>
             </div>
           </div>
           <!--category_list end--> 
           <!--other_category-->
           <div class="other_category">
             <div class="col_a">
-              <h2><a x_href="/katalog_oborudovania.html">Электро отопление</a></h2>
-              <h2><a x_href="/katalog_oborudovania.html">Увлажнители</a></h2>
+              <h2><a href="/otoplenie.html">Отопление</a></h2>
+                <% for c in @categories[4].children %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
+
+              <h2><a href="/ochistiteli-vozduha.html">Очистители воздуха</a></h2>
+                <% for c in @categories[5].children %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
+
+              <h2><a href="/osushiteli-vozduha.html">Осушители</a></h2>
+                <% for c in @categories[6].children %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
             </div>
-            <div class="col__b">
-              <h2><a x_href="/katalog_oborudovania.html">Очистители воздуха</a></h2>
-              <h2><a x_href="/katalog_oborudovania.html">Осушители</a></h2>
+            <div class="col__b"> <%#
+              <h2><a href="/otoplenie.html">Увлажнители</a></h2>
+              <h2><a href="/katalog_oborudovania.html">Электро отопление</a></h2>
+               -%>
             </div>
           </div>
           <!--other_category end-->
-          <%# div class="more_link clearfix"><a x_href="/katalog_oborudovania.html">каталог оборудования</a></div
+          <%# div class="more_link clearfix"><a href="/katalog_oborudovania.html">каталог оборудования</a></div
            -%>
         </div>
         <!--col_left end--> 
         <!--col_right-->
         <div class="col_right"> 
           <!--index-description-->
-          <div class="index-description"> Мы специализируемся на работе с торговыми марками надежного, высококачественного  и долговечного <a x_href="/katalog_oborudovania.html">климатического оборудования</a>. В первую очередь мы предлагаем вам технику самых известных и проверенных производителей. </div>
+          <div class="index-description">
+            Торговые марками надежного, высококачественного и долговечного
+            климатического оборудования
+            от самых известных и проверенных производителей.
+          </div>
           <!--index-description end--> 
           <!--index-brands-banners-->
           <div class="index-brands-banners">
-            <div class="row clearfix"><a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_1.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_2.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_3.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_4.jpg" alt="" /></a></div>
-            <div class="row clearfix"><a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_5.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_6.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_7.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_8.jpg" alt="" /></a></div>
-            <div class="row clearfix"><a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_9.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_10.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_11.jpg" alt="" /></a>
-                                      <a x_href="/firmy_i_brendi.html"><img src="/assets/images/brand_12.jpg" alt="" /></a></div>
+            <div class="row clearfix"><a href="/firmy_i_brendi.html"><img src="/assets/images/brand_1.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_2.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_3.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_4.jpg" alt="" /></a></div>
+            <div class="row clearfix"><a href="/firmy_i_brendi.html"><img src="/assets/images/brand_5.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_6.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_7.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_8.jpg" alt="" /></a></div>
+            <div class="row clearfix"><a href="/firmy_i_brendi.html"><img src="/assets/images/brand_9.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_10.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_11.jpg" alt="" /></a>
+                                      <a href="/firmy_i_brendi.html"><img src="/assets/images/brand_12.jpg" alt="" /></a></div>
           </div>
-          <!--index-brands-banners end--> 
+          <!--index-brands-banners end-->
+
           <!--index-brands-links-->
-          <div class="index-brands-links"> <%#
-                                           <a x_href="/firmy_i_brendi.html">DAIKIN</a>
-                                           <a x_href="/firmy_i_brendi.html">MITSUBISHI ELECTRIC</a>
-                                           <a x_href="/firmy_i_brendi.html">KENTATSU</a>
-                                           <a x_href="/firmy_i_brendi.html">MIDEA</a>
-
-                                           <a x_href="/firmy_i_brendi.html">TOSHIBA</a>
-                                           <a x_href="/firmy_i_brendi.html">HITACHI</a>
-                                           <a x_href="/firmy_i_brendi.html">McQUAY</a>
-                                           <a x_href="/firmy_i_brendi.html">CARRIER</a>
-
-
-                                           <a x_href="/firmy_i_brendi.html">SAMSUNG</a>
-                                           <a x_href="/firmy_i_brendi.html">MITSUBUSHI</a>
-                                           <a x_href="/firmy_i_brendi.html">AIRWELL</a>
-                                           <a x_href="/firmy_i_brendi.html">GENERAL</a>
-                                            -%>
-
-
-                                           <a x_href="/firmy_i_brendi.html">2VV</a>
-                                           <a x_href="/firmy_i_brendi.html">AEG</a>
-                                           <a x_href="/firmy_i_brendi.html">AIRSTAGE</a>
-                                           <a x_href="/firmy_i_brendi.html">BALLU</a>
-                                           <a x_href="/firmy_i_brendi.html">BIMATEK</a>
-                                           <a x_href="/firmy_i_brendi.html">BLUE</a>
-                                           <a x_href="/firmy_i_brendi.html">BOX</a>
-                                           <a x_href="/firmy_i_brendi.html">BORK</a>
-                                           <a x_href="/firmy_i_brendi.html">CIAT</a>
-                                           <a x_href="/firmy_i_brendi.html">CLIMA</a>
-                                           <a x_href="/firmy_i_brendi.html">VENETA</a>
-                                           <a x_href="/firmy_i_brendi.html">CLIMATECHNICS</a>
-                                           <a x_href="/firmy_i_brendi.html">CLIVET</a>
-                                           <a x_href="/firmy_i_brendi.html">DAEWOO</a>
-                                           <a x_href="/firmy_i_brendi.html">DANTEX</a>
-                                           <a x_href="/firmy_i_brendi.html">DELONGHI</a>
-                                           <a x_href="/firmy_i_brendi.html">DOSPEL</a>
-                                           <a x_href="/firmy_i_brendi.html">DVM</a>
-                                           <a x_href="/firmy_i_brendi.html">ELECTRA</a>
-                                           <a x_href="/firmy_i_brendi.html">ELEKTRA</a>
-                                           <a x_href="/firmy_i_brendi.html">FEROOLLI</a>
-                                           <a x_href="/firmy_i_brendi.html">FLACKTWOODS</a>
-                                           <a x_href="/firmy_i_brendi.html">FUJITSU</a>
-                                           <a x_href="/firmy_i_brendi.html">GENERAL CLIMATE</a>
-                                           <a x_href="/firmy_i_brendi.html">GMV</a>
-                                           <a x_href="/firmy_i_brendi.html">GREE</a>
-                                           <a x_href="/firmy_i_brendi.html">GRUNER</a>
-                                           <a x_href="/firmy_i_brendi.html">H-MRV</a>
-                                           <a x_href="/firmy_i_brendi.html">HAIER</a>
-                                           <a x_href="/firmy_i_brendi.html">HYUNDAI</a>
-                                           <a x_href="/firmy_i_brendi.html">JAX</a>
-                                           <a x_href="/firmy_i_brendi.html">KOMFOVENT</a>
-                                           <a x_href="/firmy_i_brendi.html">KORF</a>
-                                           <a x_href="/firmy_i_brendi.html">LESSAR</a>
-                                           <a x_href="/firmy_i_brendi.html">LG</a>
-                                           <a x_href="/firmy_i_brendi.html">LIEBERT HIROSS</a>
-                                           <a x_href="/firmy_i_brendi.html">MENERGA</a>
-                                           <a x_href="/firmy_i_brendi.html">HEAVY</a>
-                                           <a x_href="/firmy_i_brendi.html">NED</a>
-                                           <a x_href="/firmy_i_brendi.html">OSTBERG</a>
-                                           <a x_href="/firmy_i_brendi.html">PANASONIC</a>
-                                           <a x_href="/firmy_i_brendi.html">REMAK</a>
-                                           <a x_href="/firmy_i_brendi.html">ROVER</a>
-                                           <a x_href="/firmy_i_brendi.html">ROYAL</a>
-                                           <a x_href="/firmy_i_brendi.html">CLIMA</a>
-                                           <a x_href="/firmy_i_brendi.html">SALDA</a>
-                                           <a x_href="/firmy_i_brendi.html">SANYOACSON</a>
-                                           <a x_href="/firmy_i_brendi.html">SHUFT</a>
-                                           <a x_href="/firmy_i_brendi.html">SIEMENS</a>
-                                           <a x_href="/firmy_i_brendi.html">SUPER</a>
-                                           <a x_href="/firmy_i_brendi.html">MMS</a>
-                                           <a x_href="/firmy_i_brendi.html">SWEGON</a>
-                                           <a x_href="/firmy_i_brendi.html">SYSTEMAIR</a>
-                                           <a x_href="/firmy_i_brendi.html">TECHAIR</a>
-                                           <a x_href="/firmy_i_brendi.html">THERMOCOLD</a>
-                                           <a x_href="/firmy_i_brendi.html">UNIFLAIR</a>
-                                           <a x_href="/firmy_i_brendi.html">VTS</a>
-                                           <a x_href="/firmy_i_brendi.html">WEGER</a>
-                                           <a x_href="/firmy_i_brendi.html">Weiss klimatechnik</a>
-                                           <a x_href="/firmy_i_brendi.html">WENTERRADELONICS</a>
-                                           <a x_href="/firmy_i_brendi.html">WESPER</a>
-                                           <a x_href="/firmy_i_brendi.html">WOLF</a>
-                                           <a x_href="/firmy_i_brendi.html">YORK</a>
-                                         <%#
-                                           <a x_href="/firmy_i_brendi.html">АРКТОС</a>
-                                           <a x_href="/firmy_i_brendi.html">Евровент</a>
-                                           <a x_href="/firmy_i_brendi.html">ЛИССАНТ</a>
-                                          -%>
-
-                                           </div>
-
+          <div class="index-brands-links">
+  
+            <% for b in @brands %>
+             <% if ![0].include? b.id %>
+              <a href="<%= b.url -%>"><%= raw b.title -%></a>
+             <% end %>
+            <% end %>
+  
+          </div>
           <!--index-brands-links end-->
+
+          
+
           <%# div class="more_link clearfix"><a href="">производители</a></div
            -%>
         </div>
@@ -175,10 +146,30 @@
       </div>
       <!--index columns end-->
 
-      <%= render "shared/bottom_news" -%>
+      <!--
+      <div style="margin-left:300px;">
+      <% for c in @categories %>
+        <p><%= c.id -%> - <%= c.title -%> </p>
+           <% for c2 in c.children %>
+             <li><%= c2.id -%> - <%= c2.title -%>
+             <ul style="margin-left:20px;">
+             <% for c3 in c2.children %>
+               <li><%= c3.id -%> - <%= c3.title -%></li>
+             <% end %>  
+             </ul>
+             </li>
+           <% end %>
+        <p> &nbsp; </p>
+      <% end %>
+      </div>
+      -->
+
+      <%#= render "shared/bottom_news" -%>
 
     </div>
     <!--content end--> 
+  </div>
+  <!--wrap end--> 
 
 
 <%#= render "article" %>

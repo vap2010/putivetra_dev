@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><%= article_title @meta_tag -%> Пути Ветра</title>
-<meta name="description" content="<%= article_description @meta_tag -%>">
-<meta name="keywords" content="<%= article_keywords @meta_tag -%>">
+<title><%= article_title @meta_tag if @meta_tag -%> Пути Ветра</title>
+<meta name="description" content="<%= article_description @meta_tag if @meta_tag -%>">
+<meta name="keywords" content="<%= article_keywords       @meta_tag if @meta_tag -%>">
 <meta name="autor" content="Вадим, Максим sale@putivetra.ru">
 <meta name="copyright" content="ООО Пути Ветра, кондиционирование и вентиляция" />
 <link href="/assets/css/reset.css" rel="stylesheet" type="text/css" media="all" />
@@ -17,7 +17,7 @@
 <script type="text/javascript" src="/assets/js/jquery-1.8.1.min.js"></script>
 <%#  script type="text/javascript" src="/assets/js/jquery-1.4.2.min.js"></script  -%>
 <script type="text/javascript" src="/assets/js/js.common.js"></script>
-<script src="//code.jivosite.ru/script/widget/556"></script>
+<script src="http://code.jivosite.ru/script/widget/556"></script>
 
 <% if controller_name == "articles" and action_name == "index" -%>
 <%# script type="text/javascript" src="/assets/js/swfobject.js"></script %>

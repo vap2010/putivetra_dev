@@ -1,0 +1,73 @@
+  <!--wrap-->
+  <div id="wrap" class="col3_layout clearfix"> 
+    
+    <!--content-->
+    <div class="content clearfix">
+      <div class="col_a col_a_catalog">
+     
+
+       <%= render "shared/menu_left_page" -%>
+
+
+      </div>
+      <div class="col_b">
+        <div class="catalog_details">
+          <h1><%= raw @category.title -%></h1>
+          <p class="subtitle">по конструкции оборудования:</p>
+          <div class="catalog_details_list clearfix">
+
+           <% for cc in @category.children.order('position').published -%>
+            <div class="item clearfix"> <a href="<%= cc.url -%>"><img src="/assets/images/img4.jpg" alt="" /></a>
+              <p><a href="<%= cc.url -%>"><%= raw cc.title -%></a></p>
+            </div>
+           <% end %>
+
+
+            <!--
+            <p class="subtitle">по типу внутреннего блока:</p>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Настенные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Кассетные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Напольные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Потолочные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            -->
+
+          </div>
+        </div>
+
+       <!--
+        <div class="index-brands-links catalog-brands-list"> <a href="#">2VV</a> <a href="#">AEG</a> <a href="#">AIRSTAGE</a> <a href="#">AIRWELL</a> <a href="#">BALLU</a> <a href="#">BIMATEK</a> <a href="3">BLUE</a> <a href="#">BOX</a> <a href="#">BORK</a> <a href="#">CARRIER</a> <a href="#">CIAT</a> <a href="#">CLIMA</a> <a href="#">VENETA</a> <a href="#">CLIMATECHNICS</a> <a href="#">CLIVET</a> <a href="#">DAEWOO</a> <a href="#">DAIKIN</a> <a href="#">DANTEX</a> <a href="#">DELONGHI</a> <a href="#">DOSPEL</a> <a href="#">DVM</a> <a href="#">ELECTRA</a> <a href="#">ELEKTRA</a> <a href="#">FEROOLLI</a> <a href="#">FLACKTWOODS</a> <a href="#">FUJITSU</a> <a href="#">GENERAL</a> <a href="#">GENERAL</a> <a href="#">CLIMATE</a> <a href="#">GMV</a> <a href="#">GREE</a> <a href="#">GRUNER</a> <a href="#">H-MRV</a> <a href="#">HAIER</a> <a href="#">HITACHI</a> <a href="#">HYUNDAI</a> <a href="#">JAX</a> <a href="#">KENTATSU</a> <a href="#">KOMFOVENT</a> <a href="#">KORF</a> <a href="#">LESSAR</a> <a href="#">LG</a> <a href="#">LIEBERT</a> <a href="#">HIROSS</a> <a href="#">MCQUAY</a> <a href="#">MENERGA</a> <a href="#">MIDEA</a> <a href="#">MITSUBISHI</a> <a href="#">ELECTRIC</a> <a href="#">MITSUBUSHI</a> <a href="#">HEAVY</a> <a href="#">NED</a> <a href="#">OSTBERG</a> <a href="#">PANASONIC</a> <a href="#">REMAK</a> <a href="#">ROVER</a> <a href="#">ROYAL</a> <a href="#">CLIMA</a> <a href="#">SALDA</a> <a href="#">SAMSUNG</a> <a href="#">SANYOACSON</a> <a href="#">SHUFT</a> <a href="#">SIEMENS</a> <a href="#">SUPER</a> <a href="#">MMS</a> <a href="#">SWEGON</a> </div>
+       -->
+
+      </div>
+      <div class="col_c">
+        <div class="brands_logos">
+          <% for brand in @brands %>
+          <a href="<%= brand.url -%>"><img alt="<%= raw brand.title -%>" src="<%= brand.logo_small.url -%>" width="120" height="80" /></a>
+          <% end %>
+          <div class="more_link clearfix"><a href="/firmy_i_brendi.html">производители</a></div>
+          <br clear="all">
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+     <%= render "shared/bottom_news" -%>
+
+    
+    <!--content end--> 
+  </div>
+  <!--wrap end-->
+  

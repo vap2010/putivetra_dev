@@ -33,10 +33,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def find_selected_categories
+    @selected_items = []
+    @selected_items_ids = []
+    add_parent_item(@category) if @category and !@category.new_record?
+    @selected_items.unshift(Category.roots[0])
+  end
+
+
   def get_topmenu_points
      @topmenu_points = Article.find([987, 988, 989, 990, 991, 992, 1002])
      @topmenu_points << Article.find(994)
-     @topmenu_points[2].meta_tag.url = 'firmy_i_brendi'
+     ## @topmenu_points[2].meta_tag.url = 'firmy_i_brendi' ## хак не нужен
   end
 
   def page404

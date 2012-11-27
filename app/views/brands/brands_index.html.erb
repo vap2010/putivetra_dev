@@ -24,30 +24,38 @@
           <%#= @article.preview   -%>
           <%= raw @article.body   -%>
 
-        <% for brand in @brands %>
 
-        <!-- width: 250 px  !important; height: 1250 px !important; display:inline !important; -->
 
-        <div style=" background-color: none; display:block; width: 270 px; height: 300 px;  float:left; padding:30px;">
+    <% [true, false].each do |kond| %>
+    <% for brand in @brands %>
+      <% if kond
+           kondv = brand.has_cond
+         else
+           kondv = !brand.has_cond
+         end
+      %>
+      <% if kondv %>
+        <div style=" background-color: none; display:block; width: 270 px; height: 260 px;  float:left; padding:30px; padding-top:0px;">
           <a href="<%= brand.url -%>">
-            <img alt="" src="<%= brand.logo_large.url -%>" width="180" height="120" /></a>
-          <p style="font-size:9px;">
-            <a href="<%= brand.article.url -%>"> Описание <%= raw brand.title -%> </a>
-            <% if brand.article.children %>  <br />
-              <a href="<%= brand.article.children[0].url -%>">История <%= raw brand.title -%></a>
-            <% end %>
-          </p>
-          <p>
-            <% if brand.foundation_year -%>
-            <a href="<%= brand.url -%>"><%= brand.foundation_year.to_s -%></a>
-            <% end %>
-              &nbsp;
-            <% if brand.country -%>
-            <a href="<%= brand.url -%>"><%= brand.country.to_s -%></a>
-            <% end %>
-          </p>
+            <img alt="<%= raw brand.title -%>" src="<%= brand.logo_small.url -%>" width="120" height="80" /></a>
+
+          <br><a href="<%= brand.url -%>"><b><%= raw brand.title -%></b></a> (<%= brand.country.to_s -%>)
+          <br><%= technic_type_name(false, brand) -%>
+          <br><a href="<%= brand.url -%>">Оборудование</a> |
+              <a href="<%= brand.article.children[1].url -%>"> Описание марки</a> <!-- |
+              <a href="<%= brand.article.children[0].url -%>"> История</a>          -->
+          <br>    
+          <div style="width:180px;display:block;"></div>
         </div>
+      <% end %>
+    <% end %>
+        <% if kond %>
+            <br clear ="all">
+            <div style="display:block; width: 770 px; height: 20 px;  float:left; padding:30px;"><hr>
+                <h2> Производители вентиляционного оборудования </h2>
+            </div>
         <% end %>
+    <% end %>
 
 
 

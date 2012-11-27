@@ -21,19 +21,21 @@ class DataBaseTool
   #     3  3-я тест страница
   #  1171  Страницы старого сайта
 
-  #  DataBaseTool.all_main_trees_output
+
+  #  DataBaseTool.all_main_trees_output           ### Main Export
   def self.all_main_trees_output
     [987, 988, 989, 990, 991, 992].each do |pid|
       DataBaseTool.output_pages_tree_by_parent_id(pid)
     end
+    self.contents_output
   end
-
   #  DataBaseTool.contents_output
   def self.contents_output
     self.output_brands_list
     self.output_events_list
     self.output_categories_tree
   end
+
 
   #  rake vap_tools:add_data_to_model_from_csv model=Vacancy file=abc.txt --trace
   #  DataBaseTool.add_data_to_model_from_csv('Vacancy', '/application/rails/putivetra_dev/tmp/vap_tools_work/abc.txt')
@@ -116,7 +118,7 @@ class DataBaseTool
           ##  Description [Meta tag]
           sub_methods = {'meta tag' => 'meta_tag'}
           k = k.downcase.chomp
-          if k =~ /^(.+) \[(.+)\]/
+          if k =~ /^(.+) \[(.+)\]/    # detect meta
             k  = $1
             sm = sub_methods[$2]
 
@@ -136,8 +138,12 @@ class DataBaseTool
               
             elsif sm == 'abc'
             end
-          else
-            obed[k] = arvals[i]
+          else                        # not meta
+            puts '========================================================='
+            puts arvals[i]
+            eval "obed.#{k} = arvals[i]"
+            obed.body_will_change!        if k == 'body'
+            obed.description_will_change! if k == 'description'
           end
         end
       end
@@ -218,7 +224,7 @@ class DataBaseTool
       if ob.body
         ob.body.gsub!(/\[\[/, img1)
         ob.body.gsub!(/\]\]/, img2)
-        ob.body += ' '
+        ob.body_will_change!
       end
 
       if ob.save!
@@ -413,7 +419,7 @@ class DataBaseTool
         ob.body.gsub!(/font-family:[^;];[ ]*"/, '')    # del style=font-family: ... "
         ob.body.gsub!(/style="[ ]*"/, '')
 
-        ob.body += ' '
+        ob.body_will_change!
         ob.save!
       end
     end
@@ -428,7 +434,7 @@ class DataBaseTool
         ob.body.gsub!(/font-family:[^;];[ ]*/, '')    # del style="font-family: ... "
         ob.body.gsub!(/style="[ ]*"/, '')
 
-        ob.body += ' '
+        ob.body_will_change!
         ob.save!
       end
     end
@@ -459,8 +465,64 @@ vrv    }
     outfile.close
   end
 
+  #   DataBaseTool.brand_meta_to_article
+  def self.brand_meta_to_article
+    Brand.all.each do |b|
+      b.article.meta_tag.title       = b.meta_tag.title
+      b.article.meta_tag.description = b.meta_tag.description
+      b.article.meta_tag.keywords    = b.meta_tag.keywords
+      if b.article.save
+        puts "b.article.Saved!"
+      end
+      b.article.children.each do |c|
+        c.meta_tag.title       = b.meta_tag.title
+        c.meta_tag.description = b.meta_tag.description
+        c.meta_tag.keywords    = b.meta_tag.keywords
+        if c.save
+          puts "b.article.children.Saved!"
+        end
+      end
+    end
+    puts "Ok!"
+  end
 
+  #   DataBaseTool.reorder_brand_pages
+  def self.reorder_brand_pages                 ## повторный прогон запрещен
+    Article.find(989).children.each do |a|
+      ps = a.children
+      a.meta_tag.url += '_'
+      if a.save
+        puts "  =====  #{a.title} - save ======="
+      end
+      
+      a.meta_tag.url = ps[1].meta_tag.url
+      ps[1].meta_tag.url = 'marka-' + ps[1].meta_tag.url
+      ps[1].title = 'О фирме ' + a.title
+      ps[1].body = a.body
+      ps[1].body_will_change!
+      ####      ps[1].save
 
+      ## a.body = ''      
+      ## a.body_will_change!
+      ####      a.save
+    end
+    ''
+  end
+
+  #   DataBaseTool.reorder_brand_pages_reurl
+  def self.reorder_brand_pages_reurl           ## ошибка повторного прогона
+    Article.find(989).children.each do |a|
+      a.meta_tag.url = a.title.downcase.gsub(/[ ]+/, '-')
+      puts "=============== a.meta_tag.url = #{a.meta_tag.url} "
+      a.save
+      ps = a.children
+      # ps[1].meta_tag.url.gsub!(/^marka-/, '')
+      ps[1].meta_tag.url = 'marka-' + a.title.downcase.gsub(/[ ]+/, '-')
+      puts "=============== ps[1].meta_tag.url = #{ps[1].meta_tag.url} "
+      ps[1].save
+    end
+    ''
+  end
 
 
 end

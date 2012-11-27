@@ -15,6 +15,7 @@ class Brand < ActiveRecord::Base
   has_many :brand_files, :dependent => :destroy
   has_many :price_files, :dependent => :destroy
   belongs_to :article
+  scope :published, where(:is_published => true)
 
   def speciality_enum
     ['low', 'medium', 'high']
@@ -25,8 +26,15 @@ class Brand < ActiveRecord::Base
   end
 
   def url
-    '/' + meta_tag.url + '.html'
+    '/' + meta_tag.url.downcase.to_s.gsub(/^_*/, '') + '.html'
   end
 
+  def show_on_site
+    is_published     # and !is_deleted
+  end
+
+  def show_in_menu
+    is_shown_in_menu and show_on_site
+  end
 
 end

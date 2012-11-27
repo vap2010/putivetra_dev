@@ -1,0 +1,173 @@
+  <!--wrap-->
+  <div id="wrap" class="col3_layout clearfix"> 
+    
+    <!--content-->
+    <div class="content clearfix">
+      <div class="col_a col_a_catalog">
+
+        <%= render "shared/menu_left_page" -%>
+        <%#= render "shared/menu_left_yellow" -%>
+        <%= render "shared/banners_left_yellow" -%>
+
+      </div>
+      <div class="col_b clearfix">
+        <div class="subcol_a">
+          <div class="catalog_detail_item">
+          <h1><%= raw @category.title -%></h1>
+            <img src="/assets/images/_delme3.jpg" alt="" />
+            <p>
+               Текст об этой группе оборудования. 
+
+            </p>
+          </div>
+
+          <!--
+          <div class="params_sort clearfix">
+           
+            <div class="params_sort_title"> <a href="">ВЫБОР ПО ПАРАМЕТРАМ</a> </div>
+            <form action="index.html">
+              <div class="param_search">
+                <input type="text" onfocus="if (this.value == 'введите слово или фразу для поиска...') { this.value=''; }" onblur="if (this.value == '') { this.value='введите слово или фразу для поиска...' }" value="введите слово или фразу для поиска...">
+                <input type="image" src="/assets/images/search2_btn.png">
+              </div>
+            </form>
+            <div class="clear">&nbsp;</div>
+            <div class="params_sort_form clearfix">
+              <div class="form_col1">
+                <p class="form_link"><a href="">Типы внутреннего блока</a></p>
+                <div class="form_group">
+                  <p>
+                    <input type="checkbox" id="chk01" />
+                    <label for="chk01">канальный</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk02" />
+                    <label for="chk02">кассетный</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk03" />
+                    <label for="chk03">колонный</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk04" />
+                    <label for="chk04">мобильный</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk05" />
+                    <label for="chk05">напольно-потолочный</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk06" />
+                    <label for="chk06">настенный</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk07" />
+                    <label for="chk07">оконный</label>
+                  </p>
+                </div>
+                <p class="form_link"><a href="">Режимы работы</a></p>
+                <div class="form_group">
+                  <p>
+                    <input type="checkbox" id="chk08" />
+                    <label for="chk08">охлаждение</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk09" />
+                    <label for="chk09">охлаждение / обогрев</label>
+                  </p>
+                </div>
+                <p class="form_link"><a href="">Обслуживаемая площадь</a></p>
+                <div class="form_group form_group2">
+                  <p>
+                    <label>от</label>
+                    <input type="text" />
+                    <label>до</label>
+                    <input type="text" />
+                  </p>
+                </div>
+              </div>
+              <div class="form_col2"> <br />
+                <br />
+                <br />
+                <div class="form_group">
+                  <p>
+                    <input type="checkbox" id="chk12" />
+                    <label for="chk12">Режим притолчной вентиляции</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk13" />
+                    <label for="chk13">Инвертное управление мощностью</label>
+                  </p>
+                </div>
+                <p class="form_link"><a href="">Число внутренних блоков мульти-
+                  сплит-системы</a>
+                  <input type="checkbox" id="chk14" />
+                  <label for="chk14">2</label>
+                  <input type="checkbox" id="chk14" />
+                  <label for="chk14">3</label>
+                  <input type="checkbox" id="chk14" />
+                  <label for="chk14">4</label>
+                </p>
+                <div class="form_group">
+                  <p>
+                    <input type="checkbox" id="chk14" />
+                    <label for="chk14">Пульт дистанционного управления</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk15" />
+                    <label for="chk15">Сенсор движения</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk16" />
+                    <label for="chk16">Автоматический режим</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk17" />
+                    <label for="chk17">Ночной режим</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk18" />
+                    <label for="chk18">Режим осушения воздуха</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" id="chk19" />
+                    <label for="chk19">Фильтр тонкой очистки воздуха</label>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+
+          <div class="params_sort clearfix">
+
+            <% for batch in @batches %>
+
+              <a href="<%= batch.url -%>">  <%= batch.title -%>  </a>  ---
+
+            <% end %>         
+          </div>
+
+
+        </div>
+        <div class="subcol_b">
+          <div class="brands_list"> <strong>Выбери марку кондиционеров мульти-сплит систем</strong>
+
+          <% for brand in @brands %>
+            <p><a href="<%= brand.url -%>"><%= raw brand.title -%></a>
+          <% end %>
+
+          </div>
+        </div>
+        <div class="more_link clearfix"><a href="">производители</a></div>
+      </div>
+      <div class="col_c">
+
+        <%= render "shared/banners_right" -%>
+
+      </div>
+    </div>
+    
+    <!--content end--> 
+  </div>
+  <!--wrap end--> 

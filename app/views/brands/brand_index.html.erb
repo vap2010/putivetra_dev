@@ -1,7 +1,25 @@
-<h1><%= raw @brand.title -%></h1>
+<%#= @brand.inspect %>
+
+  <!--wrap-->
+  <div id="wrap" class="col3_layout col2_layout2 clearfix">
+    <!--content-->
+    <div class="content clearfix">
+      <div class="col_a col_a_catalog">
+
+        <%= render "shared/menu_left_page" -%>
+
+        <%#= render "shared/menu_left_yellow" -%>
+        
+        <%= render "shared/banners_left_yellow" -%>
+
+      </div>
+      <div class="col_b clearfix">
+        <div class="catitem_description">
+
+
+<h1>КАТАЛОГ <%= raw @brand.title -%> <%= technic_type_name(true, @brand) -%></h1>
 <p> </p>
 
-<hr>
 
 
 <pre>
@@ -9,10 +27,17 @@
 </pre>
 
 
-<%#=  params[:brand] %>
 
-<hr>
-<%#= @brand.inspect %>
+
+        </div>
+      </div>
+    </div>
+    
+    <!--content end--> 
+  </div>
+  <!--wrap end--> 
+
+
 
 
 

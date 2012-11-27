@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118225600) do
+ActiveRecord::Schema.define(:version => 20121125000000) do
 
   create_table "agencies", :force => true do |t|
     t.string   "title",      :null => false
@@ -66,9 +66,9 @@ ActiveRecord::Schema.define(:version => 20121118225600) do
   add_index "articles", ["parent_id"], :name => "index_articles_on_parent_id"
 
   create_table "batches", :force => true do |t|
-    t.integer  "brand_id",     :null => false
-    t.integer  "category_id",  :null => false
-    t.string   "title",        :null => false
+    t.integer  "brand_id",                                :null => false
+    t.integer  "category_id",                             :null => false
+    t.string   "title",                                   :null => false
     t.string   "labeling"
     t.string   "range"
     t.text     "description"
@@ -77,6 +77,16 @@ ActiveRecord::Schema.define(:version => 20121118225600) do
     t.text     "params_full"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "skin_id"
+    t.integer  "position",             :default => 1,     :null => false
+    t.boolean  "is_deleted",           :default => false, :null => false
+    t.boolean  "is_published",         :default => true,  :null => false
+    t.boolean  "is_shown_in_menu",     :default => true,  :null => false
+    t.boolean  "is_preview_published", :default => false, :null => false
+    t.string   "title_prefix"
+    t.string   "block_type_inner"
+    t.string   "block_type_outer"
+    t.string   "catalogue_file_name"
   end
 
   add_index "batches", ["brand_id"], :name => "index_batches_on_brand_id"

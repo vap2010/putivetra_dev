@@ -95,71 +95,13 @@
                                            <a href="/firmy_i_brendi.html">AIRWELL</a>
                                            <a href="/firmy_i_brendi.html">GENERAL</a>
                                             -%>
+                                            
+                                         <% for b in @brands %>
+                                          <% if ![0].include? b.id %>
+                                           <a href="<%= b.url -%>"><%= raw b.title -%></a>
+                                          <% end %>
+                                         <% end %>
 
-
-                                           <a href="/firmy_i_brendi.html">2VV</a>
-                                           <a href="/firmy_i_brendi.html">AEG</a>
-                                           <a href="/firmy_i_brendi.html">AIRSTAGE</a>
-                                           <a href="/firmy_i_brendi.html">BALLU</a>
-                                           <a href="/firmy_i_brendi.html">BIMATEK</a>
-                                           <a href="/firmy_i_brendi.html">BLUE</a>
-                                           <a href="/firmy_i_brendi.html">BOX</a>
-                                           <a href="/firmy_i_brendi.html">BORK</a>
-                                           <a href="/firmy_i_brendi.html">CIAT</a>
-                                           <a href="/firmy_i_brendi.html">CLIMA</a>
-                                           <a href="/firmy_i_brendi.html">VENETA</a>
-                                           <a href="/firmy_i_brendi.html">YORK</a>
-                                           <a href="/firmy_i_brendi.html">CLIMATECHNICS</a>
-                                           <a href="/firmy_i_brendi.html">CLIVET</a>
-                                           <a href="/firmy_i_brendi.html">DAEWOO</a>
-                                           <a href="/firmy_i_brendi.html">DANTEX</a>
-                                           <a href="/firmy_i_brendi.html">DELONGHI</a>
-                                           <a href="/firmy_i_brendi.html">DOSPEL</a>
-                                           <a href="/firmy_i_brendi.html">DVM</a>
-                                           <a href="/firmy_i_brendi.html">ELECTRA</a>
-                                           <a href="/firmy_i_brendi.html">ELEKTRA</a>
-                                           <a href="/firmy_i_brendi.html">FEROOLLI</a>
-                                           <a href="/firmy_i_brendi.html">FLACKTWOODS</a>
-                                           <a href="/firmy_i_brendi.html">FUJITSU</a>
-                                           <a href="/firmy_i_brendi.html">GENERAL CLIMATE</a>
-                                           <a href="/firmy_i_brendi.html">GMV</a>
-                                           <a href="/firmy_i_brendi.html">GREE</a>
-                                           <a href="/firmy_i_brendi.html">GRUNER</a>
-                                           <a href="/firmy_i_brendi.html">H-MRV</a>
-                                           <a href="/firmy_i_brendi.html">HAIER</a>
-                                           <a href="/firmy_i_brendi.html">HYUNDAI</a>
-                                           <a href="/firmy_i_brendi.html">JAX</a>
-                                           <a href="/firmy_i_brendi.html">KOMFOVENT</a>
-                                           <a href="/firmy_i_brendi.html">KORF</a>
-                                           <a href="/firmy_i_brendi.html">LESSAR</a>
-                                           <a href="/firmy_i_brendi.html">LG</a>
-                                           <a href="/firmy_i_brendi.html">LIEBERT HIROSS</a>
-                                           <a href="/firmy_i_brendi.html">MENERGA</a>
-                                           <a href="/firmy_i_brendi.html">HEAVY</a>
-                                           <a href="/firmy_i_brendi.html">NED</a>
-                                           <a href="/firmy_i_brendi.html">OSTBERG</a>
-                                           <a href="/firmy_i_brendi.html">PANASONIC</a>
-                                           <a href="/firmy_i_brendi.html">REMAK</a>
-                                           <a href="/firmy_i_brendi.html">ROVER</a>
-                                           <a href="/firmy_i_brendi.html">ROYAL</a>
-                                           <a href="/firmy_i_brendi.html">CLIMA</a>
-                                           <a href="/firmy_i_brendi.html">SALDA</a>
-                                           <a href="/firmy_i_brendi.html">SANYOACSON</a>
-                                           <a href="/firmy_i_brendi.html">SHUFT</a>
-                                           <a href="/firmy_i_brendi.html">SIEMENS</a>
-                                           <a href="/firmy_i_brendi.html">SUPER</a>
-                                           <a href="/firmy_i_brendi.html">MMS</a>
-                                           <a href="/firmy_i_brendi.html">SWEGON</a>
-                                           <a href="/firmy_i_brendi.html">SYSTEMAIR</a>
-                                           <a href="/firmy_i_brendi.html">TECHAIR</a>
-                                           <a href="/firmy_i_brendi.html">THERMOCOLD</a>
-                                           <a href="/firmy_i_brendi.html">UNIFLAIR</a>
-                                           <a href="/firmy_i_brendi.html">VTS</a>
-                                           <a href="/firmy_i_brendi.html">WEGER</a>
-                                           <a href="/firmy_i_brendi.html">Weiss klimatechnik</a>
-                                           <a href="/firmy_i_brendi.html">WENTERRADELONICS</a>
-                                           <a href="/firmy_i_brendi.html">WESPER</a>
-                                           <a href="/firmy_i_brendi.html">WOLF</a>
                                          <%#
                                            <a href="/firmy_i_brendi.html">АРКТОС</a>
                                            <a href="/firmy_i_brendi.html">Евровент</a>
