@@ -14,34 +14,31 @@ class BrandsController < ApplicationController
 
   def katalog_index
     get_article(988)
-    @meta_tag = @article.meta_tag
+    @meta_tag   = @article.meta_tag
     @categories = Category.roots[0].children.order('position').published
-    @brands = Brand.order('position').published
+    @brands     = Brand.order('position').published
   end
 
-  def katalog_db
+  def katalog_db      ##  exp action
     get_article(988)
-    @meta_tag = @article.meta_tag
+    @meta_tag   = @article.meta_tag
     @categories = Category.roots[0].children.order('position').published
-    @brands = Brand.order('position').published
+    @brands     = Brand.order('position').published
   end
 
   def category
     @category = Category.find(params[:cat_id])
     @meta_tag = @category.meta_tag
     find_selected_categories
-    select_category_brands
+    select_category_brands(@category)        ######   @selected_items[1]
   end
 
   def subcategory
-    @meta_tag = MetaTag.find_by_url(params[:subcat])
-    @category = @meta_tag.metatagable
-    find_selected_categories
-    select_category_brands
-    @batches = @category.batches
-  end
+    @meta_tag = MetaTag.find_by_url(params[:id])
+    common_subcategory                       ###      ???
+  end 
 
-
+  ######################################################################
 
   def brands_index
     @brands = Brand.order("position").published
@@ -53,6 +50,9 @@ class BrandsController < ApplicationController
     @brand = Brand.find(params[:brand])
     get_article(@brand.article.id) if @brand.is_published
     @meta_tag = @article.meta_tag
+    # SELECT `categories`.id FROM `categories` WHERE `categories`.`parent_id` = 5
+    # c.child_ids
+    @categories = Category.roots[0].children.order('position').published
   end
 
   def brand_category
@@ -62,18 +62,26 @@ class BrandsController < ApplicationController
   end
 
   def brand_series
+    @meta_tag = MetaTag.find_by_url(params[:series])
+    if @meta_tag.metatagable_type == 'Batch'
+      @batch    = @meta_tag.metatagable
+      @category = @batch.category
+      @brand    = @batch.brand
+    else
+      common_subcategory
+      render :subcategory
+    end
   end
-
+ 
   def brand_block
   end
 
 
   private
 
-
-  def select_category_brands
+  def select_category_brands(cat)
     @brands = []
-    add_category_brands(@selected_items[1]) if @selected_items[1]
+    add_category_brands(cat) if @selected_items[1]
     @brands.uniq!
   end
 
@@ -86,6 +94,11 @@ class BrandsController < ApplicationController
     end
   end
 
-
+  def common_subcategory
+    @category = @meta_tag.metatagable
+    find_selected_categories
+    select_category_brands(@category)
+    @batches  = @category.batches
+  end
 
 end

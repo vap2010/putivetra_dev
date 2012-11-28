@@ -1,41 +1,238 @@
+  <!--wrap-->
+  <div id="wrap" class="col2_layout clearfix"> 
+    
+    <!--content-->
+    <div class="inner_columns clearfix"> 
+      <!--index columns-->
+      
+      <div class="catalog_link"><h1>КАТАЛОГ КЛИМАТИЧЕСКОГО ОБОРУДОВАНИЯ КОМПАНИИ <%= @brand.title -%></h1></div>
+      <div class="col_a">
+
+        <img src="<%= @brand.logo_large.url -%>" alt="" />
+        <%#= render "shared/menu_left_page" -%>
+        <%#= render "shared/banners_left_yellow" -%>
+
+        <ul class="catalog">
+        <% for c in @categories -%>
+        <%
+           cids = Category.find_by_sql("SELECT `categories`.id FROM `categories` WHERE `categories`.`parent_id` IN (#{c.child_ids.join(',')})")
+           cids = cids.map{|cc| cc.id.to_s} + c.child_ids + [c.id]
+           bids = Batch.find_by_sql("SELECT DISTINCT `batches`.brand_id FROM `batches` WHERE `batches`.`brand_id`=#{@brand.id} AND `batches`.`category_id` IN (#{cids.join(',')})")
+        %>
+        <% if !bids.empty? %>
+          <%# c = Category.find(c) %>
+          <li><a href="<%= c.brand_url(@brand) -%>"><%= raw c.title.to_s -%></a>
+            <ul>
+            <% for c2 in c.children -%>
+            <%
+               cids = c2.child_ids + [c2.id]
+               bids = Batch.find_by_sql("SELECT DISTINCT `batches`.brand_id FROM `batches` WHERE `batches`.`brand_id`=#{@brand.id} AND `batches`.`category_id` IN (#{cids.join(',')})")
+            %>
+            <% if !bids.empty? %>
+              <li><a href="<%= c2.brand_url(@brand) -%>"><%= raw c2.title.to_s -%></a>
+                <%
+                   bids = []
+                   cids = c2.child_ids
+                   if !cids.empty?
+                     bids = Batch.find_by_sql("SELECT DISTINCT `batches`.brand_id FROM `batches` WHERE `batches`.`brand_id`=#{@brand.id} AND `batches`.`category_id` IN (#{cids.join(',')})")
+                   end
+                %>
+                <% if !bids.empty? %>
+                  <ul style="margin-left:18px; font-size:11px!important; color:#990;">
+                  <% for c3 in c2.children -%>
+                  <% if c3.batches -%>
+                     <li><a href="<%= c3.brand_url(@brand) -%>"><%= raw c3.title.to_s -%></a>
+                  <% end -%>
+                  <% end -%>
+                  </ul>
+                <% end -%>
+              </li>
+            <% end -%>
+            <% end -%>
+            </ul>
+          </li>
+        <% end -%>
+        <% end -%>
+        </ul>
+
+        <%#
+        <ul class="catalog">
+          <li> <a href="">Бытовые кондиционеры</a>
+            <ul>
+              <li><a href="">Сплит-системы</a></li>
+              <li><a href="">Мультисплит-системы</a></li>
+              <li><a href="">Настенные </a></li>
+              <li><a href="">Кассетные</a></li>
+              <li><a href="">Канальные</a></li>
+              <li><a href="">Консольные</a></li>
+              <li><a href="">Напольные</a></li>
+              <li><a href="">Потолочные</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Промышленные кондиционеры</a>
+            <ul>
+              <li><a href="">Мультизональные системы VRV-VRF</a></li>
+              <li><a href="">Системы Чиллер-Фанкойл</a></li>
+              <li><a href="">Центральные кондиционеры </a></li>
+              <li><a href="">Руфтоп, крышные кондиционеры </a></li>
+              <li><a href="">Шкафные кондиционеры</a></li>
+              <li><a href="">Прецизионные кондиционеры</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Вентиляция</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Электро отопление</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Увлажнители</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Очистители воздуха</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Осушители</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+        </ul>
+        -%>
+
+      </div>
+      <div class="col_b">
+        <div class="catalog_brand_page">
+           <!-- <div class="brandd_logo"><img src="<%= @brand.logo_large.url -%>" alt="" /></div> -->
+
+<h2>КАТАЛОГ <%= raw @brand.title -%> <%= technic_type_name(false, @brand) -%></h2>
+
+<%
+'    Вентиляционные установки с рекуперацией тепла'
+d = @brand.description.gsub(/^(\s*)(.{45}[\S]*)\s/, "#{$1}#{$2} \n#{$1}")
+
+
+%>
+
+
+<pre>
+<%#= raw d %>
+<%= raw @brand.description %>
+</pre>
+
+<br /><br /><br /><br />
+
+
+          <img src="/assets/images/del.jpg" alt="" /> <img src="/assets/images/del.jpg" alt="" /> <img src="/assets/images/del.jpg" alt="" />
+          <p><strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.</p>
+          <img src="/assets/images/del2.jpg" alt="" />
+          <p><strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.</p>
+        </div>
+      </div>
+      <!--index columns end--> 
+      <!--bottom_news-->
+      <div class="bottom_news clearfix">
+        <div class="c">
+          <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+          <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+          <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+          <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+          <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+        </div>
+      </div>
+      
+      <!--bottom_news end--> 
+    </div>
+    <!--content end--> 
+  </div>
+  <!--wrap end--> 
+
+
+
+
+
 <%#= @brand.inspect %>
 
   <!--wrap-->
-  <div id="wrap" class="col3_layout col2_layout2 clearfix">
     <!--content-->
+<!--
+  <div id="wrap" class="col3_layout col2_layout2 clearfix">
     <div class="content clearfix">
       <div class="col_a col_a_catalog">
 
         <%= render "shared/menu_left_page" -%>
-
-        <%#= render "shared/menu_left_yellow" -%>
-        
         <%= render "shared/banners_left_yellow" -%>
 
       </div>
       <div class="col_b clearfix">
         <div class="catitem_description">
-
-
+         
 <h1>КАТАЛОГ <%= raw @brand.title -%> <%= technic_type_name(true, @brand) -%></h1>
 <p> </p>
-
-
-
 <pre>
 <%= raw @brand.description %>
 </pre>
-
-
-
 
         </div>
       </div>
     </div>
     
-    <!--content end--> 
   </div>
-  <!--wrap end--> 
+-->
+    <!--content end-->
+  <!--wrap end-->
 
 
 

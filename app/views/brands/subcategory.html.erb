@@ -151,10 +151,10 @@
 
         </div>
         <div class="subcol_b">
-          <div class="brands_list"> <strong>Выбери марку кондиционеров мульти-сплит систем</strong>
+          <div class="brands_list"><strong><small>Выбери марку из этой категории: <%#= raw @category.title -%></small></strong>
 
           <% for brand in @brands %>
-            <p><a href="<%= brand.url -%>"><%= raw brand.title -%></a>
+            <p><strong><a style="line-height: 60%;" href="<%= brand.url -%>"><%= raw brand.title -%></a></strong></p>
           <% end %>
 
           </div>

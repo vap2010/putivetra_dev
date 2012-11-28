@@ -1,2 +1,273 @@
-<h1>Brands#brand_series</h1>
-<p>Find me in app/views/brands/brand_series.html.erb</p>
+  <!--wrap-->
+  <div id="wrap" class="col3_layout col2_layout2 clearfix"> 
+    
+    <!--content-->
+    <div class="content clearfix">
+      <div class="col_a  col_a_catalog_brandname">
+        <ul class="catalog ">
+          <li> <a href="">DAIKIN</a>
+            <ul>
+              <li><a href="">Мультисплит-системы</a>
+                <ul>
+                  <li><a href="">Настенные </a>
+                    <ul>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="">Настенные </a>
+                    <ul>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="">Настенные </a>
+                    <ul>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                      <li><a href="">XCVRTY</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="">Мультисплит-системы всех марок</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="bottom_news rightcol_news leftcol_news clearfix">
+          <div class="c">
+            <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+              <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+              <div class="item_desc clearfix">
+                <p>Текст инфоблока, расска-
+                  зывающий о преимущест-
+                  вах того или иного товара
+                  или раздела на сайте</p>
+                <a href="">ПОДРОБНЕЕ</a> </div>
+            </div>
+            <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+              <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+              <div class="item_desc clearfix">
+                <p>Текст инфоблока, расска-
+                  зывающий о преимущест-
+                  вах того или иного товара
+                  или раздела на сайте</p>
+                <a href="">ПОДРОБНЕЕ</a> </div>
+            </div>
+            <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+              <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+              <div class="item_desc clearfix">
+                <p>Текст инфоблока, расска-
+                  зывающий о преимущест-
+                  вах того или иного товара
+                  или раздела на сайте</p>
+                <a href="">ПОДРОБНЕЕ</a> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col_b clearfix">
+        <div class="catitem_description">
+          <h1> <%= @brand.title -%> <%= @batch.title_prefix -%> <%= @batch.title -%> </h1>
+          <h3>СЕРИЯ <%= @batch.title -%> &bull; <%= [@batch.block_type_inner, @batch.block_type_outer].join(' ') -%></h3>
+
+          <p style="text-indent:none !important; margin-left:0px;"><img src="/assets/images/_delme5.jpg" alt="" style="margin-left:0px;"/></p>
+          
+          <div class="grey_block clearfix"> <img src="/assets/images/_delme6.jpg" alt="" />
+            <p>
+              <%= @batch.description -%>
+              Текст по этой серии бренда.
+            </p>
+          </div>
+          <div class="catitem_columns clearfix">
+            <div class="catitem_col1">
+              <ul>
+                <li>Свободно вписывается в любой интерьер.</li>
+                <li>Три скорости вентилятора для создания максимального комфорта.</li>
+                <li>Очень простая наладка системы благодаря функции настройки работы вентилятора канального блока на номинальный расход.</li>
+                <li>Тихая работа блока с уровнем шума от 32 дБА идеально подходит для квартир и офисов.
+                  Высота пространства за подшивным (подвесным) потолком от 350 мм за счет компактности конструкции блока.
+                  Воздухозабор возможен с нижней или с задней стороны блока.
+                  Воздухоочистительный фильтр входит в стандартную комплектацию.</li>
+              </ul>
+              <h3><a href="">Общие параметры и особенности</a></h3>
+              <p>Режим притолчной вентиляции Инвертное управление мощностью
+                Пульт дистанционного управления Сенсор движения
+                Автоматический режим Ночной режим Режим осушения воздуха
+                Фильтр тонкой очистки воздуха</p>
+            </div>
+            <div class="catitem_col2">
+              <ul>
+                <li>Потребление электроэнергии снижено на 20% за счет использования нового DC вентилятора.</li>
+                <li>Возможно воздухораспределение по гибким воздуховодам за счет достаточно высокого статического давления (до 140 Па).</li>
+                <li>Возможность поддержания постоянного расхода путем сервисных настроек с проводного пульта управления в соответствии с сопротивлением воздуховодов.</li>
+                <li>Функция «Никого нет дома» позволяет экономить электроэнергию без снижения уровня комфорта (задается с проводного пульта управления).</li>
+                <li>Насос дренажной системы для отвода конденсата </li>
+              </ul>
+              <p>Режим притолчной вентиляции Инвертное управление мощностью
+                Пульт дистанционного управления Сенсор движения
+                Автоматический режим Ночной режим Режим осушения воздуха
+                Фильтр тонкой очистки воздуха </p>
+            </div>
+          </div>
+          <table width="100%" border="0" cellspacing="0" class="catitem_table" cellpadding="0">
+            <thead>
+              <tr>
+                <th rowspan="2" scope="col">Серия</th>
+                <th rowspan="2" scope="col">Модель</th>
+                <th colspan="2" scope="col">Мощность кВт</th>
+                <th rowspan="2" scope="col">Потр. <br />
+                  мощн.<br />
+                  кВт</th>
+                <th rowspan="2" scope="col">Уров.<br />
+                  шума<br />
+                  дБА</th>
+                <th rowspan="2" scope="col">Расх. <br />
+                  возд.<br />
+                  м3/час</th>
+                <th rowspan="2" scope="col">Размеры <br />
+                  (внутр)<br />
+                  ВхШхГ мм<br /></th>
+                <th rowspan="2" scope="col">Фреон </th>
+                <th rowspan="2" scope="col">Инвертор</th>
+                <th rowspan="2" scope="col">Цена<br />
+                  руб.</th>
+              </tr>
+              <tr>
+                <th>охлаж.</th>
+                <th> нагрев</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>средненапорные</td>
+                <td>FXSQ20-P</td>
+                <td>2.2</td>
+                <td>2.5</td>
+                <td>73</td>
+                <td>32/2</td>
+                <td>9/6,5</td>
+                <td>300x550x700</td>
+                <td>R410A</td>
+                <td>35</td>
+                <td>36</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="more_link clearfix"><a href="">Таблица с полными характеристиками</a></div>
+        </div>
+      </div>
+    </div>
+    
+    <!--content end--> 
+  </div>
+  <!--wrap end-->

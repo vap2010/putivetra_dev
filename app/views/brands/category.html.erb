@@ -54,7 +54,7 @@
       <div class="col_c">
         <div class="brands_logos">
           <% for brand in @brands %>
-          <a href="<%= brand.url -%>"><img alt="<%= raw brand.title -%>" src="<%= brand.logo_small.url -%>" width="120" height="80" /></a>
+          <a href="<%= @category.brand_url(brand) -%>"><img alt="<%= raw brand.title -%>" src="<%= brand.logo_small.url -%>" width="120" height="80" /></a>
           <% end %>
           <div class="more_link clearfix"><a href="/firmy_i_brendi.html">производители</a></div>
           <br clear="all">

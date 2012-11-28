@@ -17,7 +17,7 @@ class Category < ActiveRecord::Base
 
   def brand_url (brand)
     brand = Brand.find(brand) if(brand.kind_of? Numeric)
-    '/' + brand.meta_tag.url.downcase + url
+    '/' + brand.meta_tag.url.downcase.gsub(/^_+/, '') + url
   end
 
   def url

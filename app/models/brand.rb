@@ -26,7 +26,13 @@ class Brand < ActiveRecord::Base
   end
 
   def url
-    '/' + meta_tag.url.downcase.to_s.gsub(/^_*/, '') + '.html'
+    url = '/'
+    if article and article.meta_tag
+      url += article.meta_tag.url.downcase + '.html'
+    else
+      url += meta_tag.url.downcase.to_s.gsub(/^_+/, '') + '.html'
+    end
+    url
   end
 
   def show_on_site
