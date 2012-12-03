@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20121125000000) do
     t.string   "block_type_inner"
     t.string   "block_type_outer"
     t.string   "catalogue_file_name"
+    t.string   "unikey"
   end
 
   add_index "batches", ["brand_id"], :name => "index_batches_on_brand_id"

@@ -45,6 +45,11 @@ class Category < ActiveRecord::Base
     url = purl + '/' + cat.meta_tag.url.downcase
   end
 
+  def self.main_common
+    roots[0].children.order('position').published
+  end
+
+
 
   private
 

@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
     @article = Article.find_by_parent_id(nil)
     @meta_tag = @article.meta_tag
     @brands = Brand.order('position').published
+    @categories = Category.main_common
   end
 
   def show

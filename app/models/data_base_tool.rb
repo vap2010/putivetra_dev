@@ -33,6 +33,7 @@ class DataBaseTool
   def self.contents_output
     self.output_brands_list
     self.output_events_list
+    self.output_batches_list
     self.output_categories_tree
   end
 
@@ -332,6 +333,40 @@ class DataBaseTool
              self.bultonum(p.is_shown_in_menu),       p.unikey.to_s,
              self.bultonum(p.are_children_published), p.title.to_s,  self.text_length_if(p.preview),
              self.text_length_if(p.description), p.skin_id.to_s,
+             p.meta_tag.url.to_s,         p.meta_tag.title.to_s,
+             p.meta_tag.description,      p.meta_tag.keywords].join("\t")   
+      outfile.puts txt
+    end
+    outfile.close
+  end
+
+  ############################################################  Batches
+  ##  DataBaseTool.output_batches_list
+  def self.output_batches_list
+    outfile = File.open("./tmp/vap_output_pages/output_batches_list.csv", "w")
+    txt = ['id',      'position',  'is_published',
+           "brand_id",             "category_id",
+           'is_shown_in_menu',     'unikey',
+           'is_preview_published', 'title',    'title_prefix',
+           "labeling" ,"range" ,   "block_type_inner" ,
+           "block_type_outer",     "catalogue_file_name",
+           'preview_length',       'description_length',
+           'params_short',         'params_full',
+           'skin_id',
+           'Url [Meta tag]',         'Title [Meta tag]',
+           'Description [Meta tag]', 'Keywords [Meta tag]'].join("\t")
+    outfile.puts txt
+
+    Batch.all.each do |p|
+      txt = [p.id.to_s,  p.position.to_s,         self.bultonum(p.is_published),
+             p.brand_id.to_s,                       p.category_id.to_s,
+             self.bultonum(p.is_shown_in_menu),     p.unikey.to_s,
+             self.bultonum(p.is_preview_published), p.title.to_s,  p.title_prefix.to_s,
+             p.labeling.to_s,                       p.range.to_s,  p.block_type_inner.to_s,
+             p.block_type_outer.to_s,               p.catalogue_file_name.to_s,
+             self.text_length_if(p.preview),      self.text_length_if(p.description),
+             self.text_length_if(p.params_short), self.text_length_if(p.params_full),
+             p.skin_id.to_s,
              p.meta_tag.url.to_s,         p.meta_tag.title.to_s,
              p.meta_tag.description,      p.meta_tag.keywords].join("\t")   
       outfile.puts txt

@@ -5,14 +5,21 @@
     <div class="inner_columns clearfix"> 
       <!--index columns-->
       
-      <div class="catalog_link"><h1>КАТАЛОГ КЛИМАТИЧЕСКОГО ОБОРУДОВАНИЯ КОМПАНИИ <%= @brand.title -%></h1></div>
+      <div class="catalog_link"><h1>КЛИМАТИЧЕСКОЕ ОБОРУДОВАНИЕ КОМПАНИИ <%= @brand.title -%></h1></div>
       <div class="col_a">
 
         <img src="<%= @brand.logo_large.url -%>" alt="" />
         <%#= render "shared/menu_left_page" -%>
         <%#= render "shared/banners_left_yellow" -%>
 
+
+
+
+        <%= render "shared/menu_brand_index" -%>
+
         <ul class="catalog">
+
+
         <% for c in @categories -%>
         <%
            cids = Category.find_by_sql("SELECT `categories`.id FROM `categories` WHERE `categories`.`parent_id` IN (#{c.child_ids.join(',')})")
@@ -54,6 +61,13 @@
         <% end -%>
         <% end -%>
         </ul>
+
+        <p>
+          <a href="<%= @article.children[0].url -%>"><%= @article.children[0].title -%></a>
+        </p>
+        <p>
+          <a href="<%= @article.children[1].url -%>"><%= @article.children[1].title -%></a>
+        </p>
 
         <%#
         <ul class="catalog">
@@ -117,7 +131,7 @@
         <div class="catalog_brand_page">
            <!-- <div class="brandd_logo"><img src="<%= @brand.logo_large.url -%>" alt="" /></div> -->
 
-<h2>КАТАЛОГ <%= raw @brand.title -%> <%= technic_type_name(false, @brand) -%></h2>
+<h2>КАТАЛОГ ПРОИЗВОДСТВА <%= raw @brand.title -%> <br /> <%= technic_type_name(false, @brand) -%></h2>
 
 <%
 '    Вентиляционные установки с рекуперацией тепла'
@@ -136,13 +150,24 @@ d = @brand.description.gsub(/^(\s*)(.{45}[\S]*)\s/, "#{$1}#{$2} \n#{$1}")
 
 
           <img src="/assets/images/del.jpg" alt="" /> <img src="/assets/images/del.jpg" alt="" /> <img src="/assets/images/del.jpg" alt="" />
-          <p><strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.</p>
+          <p>
+            <strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.
+          </p>
+
+          <!--
           <img src="/assets/images/del2.jpg" alt="" />
-          <p><strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.</p>
+          <p>
+             <strong>Текст который рассказывает</strong> об этом бренде самые хорошие вещи. Который рассказывает об этом бренде самые хорошие вещи. Текст Рассказывает об этом бренде самые хорошие вещи. Текст который Об этом бренде самые самые хорошие вещи. Текст который рассказывает об этом бренде самые хорошие вещи. Текст который рассказывает об этом бренде самые самыехорошие вещи.Текст который рассказывает об этом бренде самые хорошие вещи.
+          </p>
+          -->
+
         </div>
       </div>
-      <!--index columns end--> 
+      <!--index columns end-->
+
+
       <!--bottom_news-->
+      <!--
       <div class="bottom_news clearfix">
         <div class="c">
           <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
@@ -192,8 +217,11 @@ d = @brand.description.gsub(/^(\s*)(.{45}[\S]*)\s/, "#{$1}#{$2} \n#{$1}")
           </div>
         </div>
       </div>
-      
-      <!--bottom_news end--> 
+      -->
+      <!--bottom_news end-->
+
+
+
     </div>
     <!--content end--> 
   </div>
@@ -219,7 +247,7 @@ d = @brand.description.gsub(/^(\s*)(.{45}[\S]*)\s/, "#{$1}#{$2} \n#{$1}")
       <div class="col_b clearfix">
         <div class="catitem_description">
          
-<h1>КАТАЛОГ <%= raw @brand.title -%> <%= technic_type_name(true, @brand) -%></h1>
+<h1>КАТАЛОГ <%= raw @brand.title -%> <br /> <%= technic_type_name(true, @brand) -%></h1>
 <p> </p>
 <pre>
 <%= raw @brand.description %>

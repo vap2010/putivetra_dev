@@ -66,5 +66,9 @@ class ApplicationController < ActionController::Base
     page404
   end
 
+  def get_article_for_catalog
+    @article = Article.find(988)
+    find_selected_artcles
+  end
 
 end

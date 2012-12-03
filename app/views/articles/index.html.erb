@@ -8,61 +8,70 @@
         <div class="col_left"> 
           <!--category_block-->
           <div class="category_block clearfix">
-            <h2><a href="/katalog_oborudovania.html">Бытовые кондиционеры</a></h2>
+            <h2><a href="<%= @categories[0].url -%>"><%= @categories[0].title -%></a></h2>
             <div class="row row_2i clearfix">
-              <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_split_img_pic.jpg" alt="" /> Сплит системы</a>
-              <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_multi_split_01_245.jpg" alt="" /> Мультисплит-системы</a> </div>
-            <div class="row clearfix"> <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_nastennyi_split_img1930.jpg" alt="" /> Настенные</a>
-                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_kasset_01_293.jpg" alt="" /> Кассетные</a>
-                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_kanaln_01_362.jpg" alt="" /> Канальные</a> </div>
-            <div class="row clearfix"> <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_napolnyi_02_240.jpg" alt="" /> Консольные</a>
-                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_previewrmob_conds.jpg" alt="" /> Мобильные</a>
-                                       <a href="/katalog_oborudovania.html" class="item"><img src="/assets/images/main_page/web_potolochn_01_378.jpg" alt="" /> Потолочные</a> </div>
+                                       <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_split_img_pic.jpg" alt="" /> Сплит системы</a>
+                                       <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_multi_split_01_245.jpg" alt="" /> Мультисплит-системы</a> </div>
+            <div class="row clearfix"> <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_nastennyi_split_img1930.jpg" alt="" /> Настенные</a>
+                                       <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_kasset_01_293.jpg" alt="" /> Кассетные</a>
+                                       <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_kanaln_01_362.jpg" alt="" /> Канальные</a> </div>
+            <div class="row clearfix"> <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_napolnyi_02_240.jpg" alt="" /> Консольные</a>
+                                       <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_previewrmob_conds.jpg" alt="" /> Мобильные</a>
+                                       <a href="<%= @categories[0].url -%>" class="item"><img src="/assets/images/main_page/web_potolochn_01_378.jpg" alt="" /> Потолочные</a> </div>
           </div>
           <!--category_block end--> 
           <!--category_list-->
           <div class="category_list clearfix">
             <div class="item clearfix">
-              <h2><a href="/katalog_oborudovania.html">Промышленные кондиционеры</a></h2>
-              <a href="/katalog_oborudovania.html"><img src="/assets/images/main_page/web_prom_cond_105.jpg" alt="" /></a>
-              <p><a href="/katalog_oborudovania.html" class="item">Мультизональные системы VRV-VRF</a> <br />
-                 <a href="/katalog_oborudovania.html" class="item">Системы Чиллер-Фанкойл</a>           <br />
-                 <a href="/katalog_oborudovania.html" class="item">Центральные кондиционеры</a>         <br />
-                 <a href="/katalog_oborudovania.html" class="item">Руфтоп, крышные кондиционеры</a>     <br />
-                 <a href="/katalog_oborudovania.html" class="item">Шкафные кондиционеры</a>             <br />
-                 <a href="/katalog_oborudovania.html" class="item">Прецизионные кондиционеры</a>
+              <h2><a href="<%= @categories[1].url -%>"><%= @categories[1].title -%></a></h2>
+              <a href="<%= @categories[1].url -%>">
+              <img src="/assets/images/main_page/web_prom_cond_105.jpg" alt="" style="margin-bottom:10px;" /></a>
+              <p>
+                <% for c in @categories[1].children.order('position').published %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
               </p>
             </div>
+
             <div class="item clearfix">
-              <h2><a href="/katalog_oborudovania.html">Вентиляция</a></h2>
-              <a href="/katalog_oborudovania.html"><img src="/assets/images/main_page/web_ventil_105.jpg" alt="" /></a>
-              <p>Приточно-вытяжная вентиляция
-                Наборные приточно-вытяжные установки </p>
+              <h2><a href="<%= @categories[2].url -%>"><%= @categories[2].title -%></a></h2>
+              <a href="<%= @categories[2].url -%>"><img src="/assets/images/main_page/web_ventil_105.jpg" alt="" /></a>
+              <p>
+                <% for c in @categories[2].children.order('position').published %>
+                  <a href="<%= c.url -%>" class="item"><%= c.title -%></a><br />
+                <% end %>
+              </p>
             </div>
           </div>
-          <!--category_list end--> 
+          <!--category_list end-->
+
           <!--other_category-->
           <div class="other_category">
-            <div class="col_a">
-              <%# h2><a href="/katalog_oborudovania.html">Электро отопление</a></h2 -%>
-              <h2><a href="/katalog_oborudovania.html">Увлажнители</a></h2>
-              <h2><a href="/katalog_oborudovania.html">Очистители воздуха</a></h2>
-              <h2><a href="/katalog_oborudovania.html">Осушители</a></h2>
+            <div class="col_a" style="width:150px; float:left;">
+              <h2><a href="<%= @categories[3].url -%>"><%= @categories[3].title -%></a></h2>
+              <h2><a href="<%= @categories[4].url -%>"><%= @categories[4].title -%></a></h2>
             </div>
-            <div class="col_b">
+            <div class="col_b" style="width:200px;">
+              <h2><a href="<%= @categories[5].url -%>"><%= @categories[5].title -%></a></h2>
+              <h2><a href="<%= @categories[6].url -%>"><%= @categories[6].title -%></a></h2>
             </div>
           </div>
           <!--other_category end-->
-          <div class="more_link clearfix"><a href="/katalog_oborudovania.html">каталог оборудования</a></div>
+          <br clear="all">
+
+          <div class="more_link clearfix"  style="margin-top:20px;"><a href="/katalog_oborudovania.html">каталог оборудования</a></div>
         </div>
         <!--col_left end--> 
         <!--col_right-->
         <div class="col_right"> 
           <!--index-description-->
-          <div class="index-description"> Мы специализируемся на работе с торговыми марками надежного, высококачественного  и долговечного <a href="/katalog_oborudovania.html">климатического оборудования</a>. В первую очередь мы предлагаем вам технику самых известных и проверенных производителей. </div>
+          <div class="index-description"> Мы специализируемся на работе с торговыми марками надежного, высококачественного  и долговечного
+                                          <a href="/katalog_oborudovania.html">климатического оборудования</a>.
+                                          В первую очередь мы предлагаем вам технику самых известных и проверенных производителей. </div>
           <!--index-description end--> 
           <!--index-brands-banners-->
           <div class="index-brands-banners">
+            <!--
             <div class="row clearfix"><a href="/firmy_i_brendi.html"><img src="/assets/images/brand_1.jpg" alt="" /></a><a
                                          href="/firmy_i_brendi.html"><img src="/assets/images/brand_2.jpg" alt="" /></a><a
                                          href="/firmy_i_brendi.html"><img src="/assets/images/brand_3.jpg" alt="" /></a><a
@@ -75,29 +84,22 @@
                                          href="/firmy_i_brendi.html"><img src="/assets/images/brand_10.jpg" alt="" /></a><a
                                          href="/firmy_i_brendi.html"><img src="/assets/images/brand_11.jpg" alt="" /></a><a
                                          href="/firmy_i_brendi.html" class="end"><img src="/assets/images/brand_12.jpg" alt="" /></a></div>
+            -->
+
+            <% for b in @brands -%>
+             <% if b.is_goods_public > 0
+             -%><a href="<%= @categories[0].brand_url(b) -%>"><img alt="<%= raw b.title -%>" src="<%= b.logo_small.url -%>"
+                               stile="margin:0px;" width="96" height="64" /></a><%
+                end -%>
+            <% end -%>
+
           </div>
           <!--index-brands-banners end--> 
           <!--index-brands-links-->
-          <div class="index-brands-links"> <%#
-                                           <a href="/firmy_i_brendi.html">DAIKIN</a>
-                                           <a href="/firmy_i_brendi.html">MITSUBISHI ELECTRIC</a>
-                                           <a href="/firmy_i_brendi.html">KENTATSU</a>
-                                           <a href="/firmy_i_brendi.html">MIDEA</a>
-
-                                           <a href="/firmy_i_brendi.html">TOSHIBA</a>
-                                           <a href="/firmy_i_brendi.html">HITACHI</a>
-                                           <a href="/firmy_i_brendi.html">McQUAY</a>
-                                           <a href="/firmy_i_brendi.html">CARRIER</a>
-
-
-                                           <a href="/firmy_i_brendi.html">SAMSUNG</a>
-                                           <a href="/firmy_i_brendi.html">MITSUBUSHI</a>
-                                           <a href="/firmy_i_brendi.html">AIRWELL</a>
-                                           <a href="/firmy_i_brendi.html">GENERAL</a>
-                                            -%>
+          <div class="index-brands-links"> 
                                             
                                          <% for b in @brands %>
-                                          <% if ![0].include? b.id %>
+                                          <% if b.is_goods_public == 0 %>
                                            <a href="<%= b.url -%>"><%= raw b.title -%></a>
                                           <% end %>
                                          <% end %>

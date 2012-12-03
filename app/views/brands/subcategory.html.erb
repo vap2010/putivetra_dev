@@ -21,7 +21,7 @@
             </p>
           </div>
 
-          <!--
+          <%#!--
           <div class="params_sort clearfix">
            
             <div class="params_sort_title"> <a href="">ВЫБОР ПО ПАРАМЕТРАМ</a> </div>
@@ -137,13 +137,13 @@
               </div>
             </div>
           </div>
-          -->
+          -%>
 
           <div class="params_sort clearfix">
 
             <% for batch in @batches %>
 
-              <a href="<%= batch.url -%>">  <%= batch.title -%>  </a>  ---
+              <a href="<%= batch.url -%>">  <%= raw batch.title -%>  </a>  ---
 
             <% end %>         
           </div>
@@ -154,7 +154,7 @@
           <div class="brands_list"><strong><small>Выбери марку из этой категории: <%#= raw @category.title -%></small></strong>
 
           <% for brand in @brands %>
-            <p><strong><a style="line-height: 60%;" href="<%= brand.url -%>"><%= raw brand.title -%></a></strong></p>
+            <p><strong><a style="line-height: 60%;" href="<%= @category.brand_url(brand) -%>"><%= raw brand.title -%></a></strong></p>
           <% end %>
 
           </div>

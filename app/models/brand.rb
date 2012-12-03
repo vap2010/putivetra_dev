@@ -15,6 +15,7 @@ class Brand < ActiveRecord::Base
   has_many :brand_files, :dependent => :destroy
   has_many :price_files, :dependent => :destroy
   belongs_to :article
+  has_many :batches
   scope :published, where(:is_published => true)
 
   def speciality_enum
@@ -42,5 +43,14 @@ class Brand < ActiveRecord::Base
   def show_in_menu
     is_shown_in_menu and show_on_site
   end
+
+  def is_content
+    description.length
+  end
+
+  def is_goods_public
+    batches.published.size
+  end
+
 
 end

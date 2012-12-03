@@ -1,2 +1,182 @@
-<h1>Brands#brand_category</h1>
-<p>Find me in app/views/brands/brand_category.html.erb</p>
+  <!--wrap-->
+  <div id="wrap" class="col3_layout clearfix"> 
+    
+    <!--content-->
+    <div class="content clearfix">
+      <div class="col_a col_a_catalog">
+        <img src="<%= @brand.logo_large.url -%>" alt="" width="180" height="120" style="border:#065A7A 6px solid;" />
+
+        <%= render "shared/menu_brand_index" -%>
+
+        <%#
+        <ul class="catalog">
+          <li> <a href="" class="active">Бытовые кондиционеры</a>
+            <ul>
+              <li><a href="">Сплит-системы</a></li>
+              <li><a href="">Мультисплит-системы</a>
+                <ul>
+                  <li><a href="">Настенные </a></li>
+                  <li><a href="">Кассетные</a></li>
+                  <li><a href="">Канальные</a></li>
+                  <li><a href="">Консольные</a></li>
+                  <li><a href="">Напольные</a></li>
+                  <li><a href="">Потолочные</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li> <a href="">Промышленные кондиционеры</a>
+            <ul>
+              <li><a href="">Мультизональные системы VRV-VRF</a></li>
+              <li><a href="">Системы Чиллер-Фанкойл</a></li>
+              <li><a href="">Центральные кондиционеры </a></li>
+              <li><a href="">Руфтоп, крышные кондиционеры </a></li>
+              <li><a href="">Шкафные кондиционеры</a></li>
+              <li><a href="">Прецизионные кондиционеры</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Вентиляция</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Электро отопление</a>
+            <ul>
+              <li><a href="">Приточно-вытяжная вентиляция</a></li>
+              <li><a href="">Наборные приточно-вытяжные установки</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Увлажнители</a>
+            <ul>
+              <li><a href="">увлажнители</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Очистители воздуха</a>
+            <ul>
+              <li><a href="">очистители</a></li>
+            </ul>
+          </li>
+          <li> <a href="">Осушители</a>
+            <ul>
+              <li><a href="">осушители</a></li>
+            </ul>
+          </li>
+        </ul>
+        -%>
+
+
+      </div>
+      <div class="col_b">
+        <div class="catalog_details">
+          <h1>  КАТАЛОГ <%= raw @brand.title -%> <br />
+                <%= raw @category.title -%>    </h1>
+
+          <p class="subtitle">по конструкции оборудования:</p>
+
+          <div class="catalog_details_list clearfix">
+
+                         <p style="color:red;">пока по всем маркам</p>
+
+
+           <% for cc in @category.children.order('position').published -%>
+            <div class="item clearfix"> <a href="<%= cc.brand_url(@brand) -%>"><img src="/assets/images/img4.jpg" alt="" /></a>
+              <p><a href="<%= cc.brand_url(@brand) -%>"><%= raw cc.title -%></a></p>
+            </div>
+           <% end %>
+          
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Сплит-система- кондиционер, который состоит из наружного и внутреннего блоков.</a></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Мультисплит-системы это установка из нескольких   внутренних блоков и одного наружного.</a></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Моноблоки: оконные, мобильные</a></p>
+            </div>
+
+
+
+            <!--  
+            <p class="subtitle">по типу внутреннего окна:</p>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Настенные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Кассетные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Напольные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            <div class="item clearfix"> <img src="/assets/images/img4.jpg" alt="" />
+              <p><a href="">Потолочные</a></p>
+              <p><small>Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока. Текст об этом типе внутреннего блока.</small></p>
+            </div>
+            -->
+
+
+
+          </div>
+        </div>
+
+
+        <!--
+        <div class="index-brands-links catalog-brands-list">
+          <a href="#">2VV</a> <a href="#">AEG</a> <a href="#">AIRSTAGE</a> <a href="#">AIRWELL</a> <a href="#">BALLU</a> <a href="#">BIMATEK</a> <a href="3">BLUE</a> <a href="#">BOX</a> <a href="#">BORK</a> <a href="#">CARRIER</a> <a href="#">CIAT</a> <a href="#">CLIMA</a> <a href="#">VENETA</a> <a href="#">CLIMATECHNICS</a> <a href="#">CLIVET</a> <a href="#">DAEWOO</a> <a href="#">DAIKIN</a> <a href="#">DANTEX</a> <a href="#">DELONGHI</a> <a href="#">DOSPEL</a> <a href="#">DVM</a> <a href="#">ELECTRA</a> <a href="#">ELEKTRA</a> <a href="#">FEROOLLI</a> <a href="#">FLACKTWOODS</a> <a href="#">FUJITSU</a> <a href="#">GENERAL</a> <a href="#">GENERAL</a> <a href="#">CLIMATE</a> <a href="#">GMV</a> <a href="#">GREE</a> <a href="#">GRUNER</a> <a href="#">H-MRV</a> <a href="#">HAIER</a> <a href="#">HITACHI</a> <a href="#">HYUNDAI</a> <a href="#">JAX</a> <a href="#">KENTATSU</a> <a href="#">KOMFOVENT</a> <a href="#">KORF</a> <a href="#">LESSAR</a> <a href="#">LG</a> <a href="#">LIEBERT</a> <a href="#">HIROSS</a> <a href="#">MCQUAY</a> <a href="#">MENERGA</a> <a href="#">MIDEA</a> <a href="#">MITSUBISHI</a> <a href="#">ELECTRIC</a> <a href="#">MITSUBUSHI</a> <a href="#">HEAVY</a> <a href="#">NED</a> <a href="#">OSTBERG</a> <a href="#">PANASONIC</a> <a href="#">REMAK</a> <a href="#">ROVER</a> <a href="#">ROYAL</a> <a href="#">CLIMA</a> <a href="#">SALDA</a> <a href="#">SAMSUNG</a> <a href="#">SANYOACSON</a> <a href="#">SHUFT</a> <a href="#">SIEMENS</a> <a href="#">SUPER</a> <a href="#">MMS</a> <a href="#">SWEGON</a>
+        </div>
+        <div class="more_link clearfix"><a href="">производители</a></div>
+        -->
+
+
+
+      </div>
+      <div class="col_c">
+        <div class="category_brand"> <img src="/assets/images/brand_1.jpg" alt="" /> Серия системы<br />
+          <a href="">DAIKIN</a><br />
+          Мощность<br />
+          от 4 до 10квт. </div>
+        <div class="bottom_news rightcol_news clearfix">
+          <div class="c">
+            <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+            <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+            <div class="item"> <a href=""><img src="/assets/images/img.jpg" alt="" /></a>
+            <div class="item_title"><a href="">заголовки Здесь можно разные</a></div>
+            <div class="item_desc clearfix">
+              <p>Текст инфоблока, расска-
+                зывающий о преимущест-
+                вах того или иного товара
+                или раздела на сайте</p>
+              <a href="">ПОДРОБНЕЕ</a> </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      
+    </div>
+    
+    <!--content end--> 
+  </div>
+  <!--wrap end-->
