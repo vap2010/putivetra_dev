@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121125000000) do
+ActiveRecord::Schema.define(:version => 20121205223344) do
 
   create_table "agencies", :force => true do |t|
     t.string   "title",      :null => false
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(:version => 20121125000000) do
     t.string   "title_prefix"
     t.string   "block_type_inner"
     t.string   "block_type_outer"
-    t.string   "catalogue_file_name"
+    t.integer  "catalog_id"
     t.string   "unikey"
   end
 
@@ -177,6 +177,20 @@ ActiveRecord::Schema.define(:version => 20121125000000) do
     t.integer  "article_id"
     t.boolean  "has_cond"
     t.boolean  "has_vent"
+  end
+
+  create_table "catalogs", :force => true do |t|
+    t.boolean  "is_deleted",       :default => false, :null => false
+    t.boolean  "is_published",     :default => true,  :null => false
+    t.boolean  "is_shown_in_menu", :default => false, :null => false
+    t.integer  "brand_id"
+    t.integer  "position"
+    t.string   "title",                               :null => false
+    t.string   "file_name"
+    t.string   "year"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "categories", :force => true do |t|

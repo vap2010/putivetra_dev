@@ -13,6 +13,8 @@ gem 'fastercsv'
 gem 'ancestry'
 
 gem 'rich'
+gem 'roo'
+gem 'rmagick'
 
 gem 'json'
 

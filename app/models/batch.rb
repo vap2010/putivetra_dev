@@ -1,6 +1,7 @@
 class Batch < ActiveRecord::Base
   belongs_to :brand
   belongs_to :category
+  belongs_to :catalog
   validates :brand_id, :category_id, :title, :presence => true
   has_one :equipment_album, :class_name => "Album", :dependent => :destroy, :as => :albumable, :conditions => {:role => 'equipment'}
   has_one :optional_equipment_album, :class_name => "Album", :dependent => :destroy, :as => :albumable, :conditions => {:role => 'optional'}

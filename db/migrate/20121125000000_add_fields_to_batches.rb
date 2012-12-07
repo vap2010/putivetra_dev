@@ -9,7 +9,7 @@ class AddFieldsToBatches < ActiveRecord::Migration
     add_column :batches, :title_prefix,        :string
     add_column :batches, :block_type_inner,    :string
     add_column :batches, :block_type_outer,    :string
-    add_column :batches, :catalogue_file_name, :string
-    add_column :batches, :unikey, :string
+    add_column :batches, :catalog_id,        :integer
+    add_column :batches, :unikey,              :string
   end
 end
