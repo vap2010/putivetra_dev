@@ -1,6 +1,4 @@
 class DbToolPdfImport
- # require 'rubygems'
- # require 'roo'
   require 'RMagick'
   include Magick
 
@@ -9,6 +7,7 @@ class DbToolPdfImport
   @@catalog_images_site_root = '/application/rails/putivetra_shared_dev' + @@site_catalog_images
   @@max_x = 0
   @@max_y = 0
+  @@index_html_links = []
 
   def self.load_serias_ids_pair(load_path)
     hids = {}
@@ -27,22 +26,25 @@ class DbToolPdfImport
 
   def self.scan_all_brands_catalog                      ###       обзор папок по брендам
     @@max_x = 0; @@max_y = 0
-    serpar = { :ror_root_txt_file_descriptor => File.open('./scan_all_brands_catalog_folders.txt', 'w') }
+    serpar = {:ror_root_txt_file_descriptor => File.open('./scan_all_brands_catalog_folders.txt', 'w')}
     serpar[:ids_of_catalogs] = self.load_serias_ids_pair('./tmp/vap_tools_work/__ids_of_catalogs.txt')
     serpar[:serias_ids_hash] = self.load_serias_ids_pair('./tmp/vap_tools_work/__ids_of_series.txt')
-    bds = Dir.new(@@data_root_path).map {|x| x if x !~ /^\./ }
+    bds = Dir.new(@@data_root_path).map {|x| x if x !~ /^\./ }.compact.sort
+    #  bds = ["Mitsubishi Electric", "Mitsubishi Heavy", "Panasonic", "Toshiba"]
+    # puts bds.inspect
     bn = 0; an = 0
     n = 1
-    bds.compact.sort.each do |brand|
+    bds.each do |brand|
       serpar[:brand_name] = brand
-      #fff.puts "\nBrand = #{brand}"                    # бренд
-      self.scan_brand_catalog_folder(serpar)
+      #serpar[:ror_root_txt_file_descriptor].puts "\nBrand = #{brand}"                    # бренд
+      self.scan_brand_catalog_folder(serpar)     #   if brand == 'Toshiba'
     end
 
-    # fff.puts "\n\n ostatok \n\n"
-    # serpar[:serias_ids_hash].each_pair do |k,v|  fff.puts "#{k}\t#{v}"  end
-    # fff.close
+    # serpar[:ror_root_txt_file_descriptor].puts "\n\n ostatok \n\n"
+    # serpar[:serias_ids_hash].each_pair do |k,v|  serpar[:ror_root_txt_file_descriptor].puts "#{k}\t#{v}"  end
 
+    serpar[:ror_root_txt_file_descriptor].close
+    self.make_html_index
     puts " an = #{an}  /  bn = #{bn} "
     puts "Ok!       max_x = #{@@max_x} | max_y = #{@@max_y}"
   end
@@ -53,19 +55,28 @@ class DbToolPdfImport
     brk.compact.each do |katalog|
       serpar[:catalog_name] = katalog
       serpar[:kat_path] = @@data_root_path + serpar[:brand_name] + '/' + katalog + '/'
-      #fff.puts "#{n}\t#{katalog}\n#{serpar[:brand_name]} "  # названия каталога
 
-      fn = './public/all_block_' + serpar[:ids_of_catalogs][katalog].to_s + '_'
-      serpar[:exp_file_name] = fn + serpar[:brand_name].downcase.gsub(/ +/, '_') + '.html'
-      @@web = File.open(fn, 'w')
-      serpar[:exp_file_descriptor] = @@web
+      note = "#{serpar[:ids_of_catalogs][katalog.chomp.downcase]}\t#{katalog}\t#{serpar[:brand_name]}"
+      # serpar[:ror_root_txt_file_descriptor].puts note                      # названия каталога
+       puts note
+
+      fn = '/all_block_' + sprintf("%02d", serpar[:ids_of_catalogs][katalog.downcase]) + '_'
+      fn += serpar[:brand_name].downcase.gsub(/ +/, '_') + '.html'
+      @@index_html_links << fn
+      fn = './public' + fn
+      serpar[:web_file_name] = fn
+        @@web = File.open(fn, 'w')
+      serpar[:web_file_descriptor] = @@web
       self.web_head_write
       self.web_brand_title_write(serpar[:brand_name])
       self.web_catalog_name_write(katalog)
-      serpar[:cat_num] = serpar[:ids_of_catalogs][katalog]
-      next if !serpar[:ids_of_catalogs][katalog]
-        self.scan_branded_series(serpar)
-      self.web_body_end_write
+      if serpar[:ids_of_catalogs][katalog.chomp.downcase]
+        serpar[:cat_num] = serpar[:ids_of_catalogs][katalog.chomp.downcase]
+          self.scan_branded_series(serpar)
+        self.web_body_end_write
+      else
+        puts "   id для каталога #{katalog} не найден   "
+      end
       @@web.close
     end
   end
@@ -78,9 +89,11 @@ class DbToolPdfImport
         serpar[:series] = s.gsub(/^(\d+)_/, '')
         self.web_series_name_write(serpar[:series], serpar[:brand_name])
         if ($1).to_i > 0 then  serpar[:this_series_id] = ($1).to_i else serpar[:this_series_id] = 0 end
-        #fff.puts "        #{s}"                         # названия серии
+        # serpar[:ror_root_txt_file_descriptor].puts "        #{s}"                    # названия серии
+        # puts "        #{s}"
         serpar[:series_path] = serpar[:kat_path] + s + '/'
-          self.scan_series_content(serpar)
+          self.scan_series_content(serpar)                  # генерация страниц и импорт в базу
+          # self.scan_series_images(serpar)              # предварительная генерация картинок
       end
     end
   end
@@ -99,12 +112,24 @@ class DbToolPdfImport
     end
   end
 
+                                                           # картинки серии
+  def self.scan_series_images(serpar)
+    spath = serpar[:series_path] + 'images/'
+    pics = Dir.new(spath).map{|x| x if x !~ /^\./ }.compact
+    pics.each do |pic|
+      puts "#{spath + pic}"
+      # self.audit_images_sizes(spath + pic, 780)   # ширина контента 784px
+      self.resize_image_by_width(spath + pic, 780)
+    end
+  end
+
+
   ###########################################################
   ##########################################################  Обработка файла
 
   def self.etable_open_and_work(serpar)                  ### чтение таблицы
     sdf = serpar[:series_path] + serpar[:data_file_name]
-   # puts sdf.to_s
+    # puts sdf.to_s
 
     if File.exist? sdf
       if sdf.downcase =~ /\.ods\z/
@@ -125,7 +150,7 @@ class DbToolPdfImport
 
     rescue
       puts "res-cue  #{sdf}"
-      #break  
+      break  
   end
 
   def self.puts_first_row(oo, serpar)         ###  Выбор функции обработки
@@ -142,30 +167,55 @@ class DbToolPdfImport
 
   #  DbToolPdfImport.scan_all_brands_catalog  
 
-  ###########################################  Make series-html-page
-    def self.web_series_html_page_write(oo, serpar)
-    if serpar[:this_series_id] == 0
-      note = serpar[:series] + ' (' + serpar[:brand_name]  + ')'
- #     puts "  серия #{note} не связана с id в базе  (#{serpar[:catalog_name]}) "
-    else
 
+  # EXP
+  def self.web_series_html_page_write_1(oo, serpar)
       #imh = self.replace_series_images(serpar)                    # хеш рисунков
-    
-      serpar[:exp_file_descriptor].puts %q[ <table border="1"> ]
+      serpar[:web_file_descriptor].puts %q[ <table border="1"> ]
       1.upto(10) do |i|
         1.upto(50) do |j|
           data = oo.cell(j, i).to_s
           data.gsub!(/^ +/, '')
           data.gsub!(/ +$/, '')
-          data = self.insert_img_tag(data, imh)                  # вставка картинок
+         # data = self.insert_img_tag(data, imh)                  # вставка картинок
           if !data.empty?
             @@max_x = i if @@max_x < i
             @@max_y = j if @@max_y < j
-            serpar[:exp_file_descriptor].puts "<tr><td><pre> #{data} </pre></td></tr>"
+            serpar[:web_file_descriptor].puts "<tr><td><pre> #{data} </pre></td></tr>"
           end
         end
       end
-      serpar[:exp_file_descriptor].puts %q[ </table> ]
+      serpar[:web_file_descriptor].puts %q[ </table> ]
+  end
+
+  
+
+  ###########################################  Make series-html-page
+    def self.web_series_html_page_write(oo, serpar)
+    if serpar[:this_series_id] == 0
+      note = serpar[:series] + ' (' + serpar[:brand_name]  + ')'
+      puts "  серия #{note} не связана с id в базе  (#{serpar[:catalog_name]}) "
+    else
+
+      imh = self.replace_series_images(serpar)                    # хеш рисунков
+      puts "--------------------------"
+      puts imh.inspect
+    
+      serpar[:web_file_descriptor].puts %q[ <table border="1"> ]
+      1.upto(10) do |i|
+        1.upto(50) do |j|
+          data = oo.cell(j, i).to_s
+          data.gsub!(/^ +/, '')
+          data.gsub!(/ +$/, '')
+          if !data.empty?
+            @@max_x = i if @@max_x < i
+            @@max_y = j if @@max_y < j
+            data = self.insert_img_tag(data, imh)                  # вставка картинок
+            serpar[:web_file_descriptor].puts "<tr><td><pre> #{data} </pre></td></tr>"
+          end
+        end
+      end
+      serpar[:web_file_descriptor].puts %q[ </table> ]
     end
   end
   ###########################################  /Make series-html-page
@@ -174,51 +224,90 @@ class DbToolPdfImport
     imh.each_pair do |k, p|
       imnane = k.gsub(/\.\w+$/, '').to_s
 
-    #  puts "im path = #{p}"
+      puts "im path = #{p}" if data =~ /<img/
 
       r2 = Regexp.new(imnane)
       regexp = /<img[^>]+#{r2.source}[^>]+>/
       imtag = "<img alt=\"\" src=\"#{p}\">"
-      data.gsub!(regexp, imtag)
+      data = data.gsub(regexp, imtag)
     end
+    data
   end
 
   ###########################################  replace_series_images
   def self.replace_series_images(serpar)     # хеш рисунков и перемещение
     imh = {}
     pathi = serpar[:series_path] + 'images/' 
-    ims = Dir.new(pathi).map{|x| x if x !~ /^\./}.compact
+    ims = Dir.new(pathi).map{|x| x if x !~ /\A\./}.compact
     ims.each do |im|
-      if im =~ /\.[j|J][p|P][g|G]\z/ or im =~ /\.[g|G][i|I][f|F]\z/
+      if im =~ /\.[j|J][p|P][g|G]\z/ or im =~ /\.[g|G][i|I][f|F]\z/  # or im =~ /\.[p|P][n|N][g|G]\z/
         src = pathi + im
+        puts src
         wdest  = serpar[:brand_name].downcase.gsub(/[ |-|]+/, '_') + '/'
         wdest += serpar[:cat_num].to_s + '/' + serpar[:this_series_id].to_s + '/'
         dest  = @@catalog_images_site_root + wdest
         wdest = @@site_catalog_images + wdest
-        im.gsub!(/\s/, '_')
-        system "mkdir -p '#{dest}'" if !File.exists? dest
+        unless File.exists? dest
+          system "mkdir -p '#{dest}'"
+        end
+        im.gsub!(/\s+/, '_')
         system "cp '#{src}' '#{dest + 'src_' + im}'"
         system "cp '#{src}' '#{dest + im}'"
-        self.resize_image_by_width(dest + im, 400)
+          #  self.resize_image_by_width(dest + im, 400)    # Если картинки уже есть
         imh[im] = wdest + im
       end
     end
-    #puts ims.inspect
+    # puts imh.inspect
+    imh
+  rescue
+    # puts serpar.inspect
+    puts imh.inspect
+    puts ims.inspect
+    break
+  ensure
+    puts imh.inspect
     imh
   end
 
-  ### DbToolPdfImport.resize_image_by_width(dest2, width)    # ресайз картинок
-  def self.resize_image_by_width(dest2, width)
-    imgo =  ImageList.new(dest2)
+  ### DbToolPdfImport.resize_image_by_width(dest, width)    # ресайз картинок
+  def self.resize_image_by_width(dest, width)
+    #require 'RMagick'
+    #include Magick
+    imgo = ImageList.new(dest)
     if imgo.columns > width
-      imgo = imgo.scale(width.to_f/imgo.columns.to_f)
-      imgo.write dest2
+      imgo.scale(width.to_f/imgo.columns.to_f).write dest
     end
+  rescue
+    puts "\n    Ошибка в ресайзе!    #{dest}    \n"
   end
   ###########################################  /replace_series_images
 
+  def self.audit_images_sizes(pic, width)   ### для подготовки картинок
+    imgo = ImageList.new(dest)
+    if imgo[0].columns > width
+      imgo[0].scale(width.to_f/imgo.columns.to_f).write dest
+    end
+  rescue
+    puts "\n    Ошибка в ресайзе!    #{dest}    \n"
+  ensure
+    imgo[0].destroy!
+    imgo.clear
+  end
+
 
   ########################################### Make web-page
+
+  def self.make_html_index
+    # wpath = Rails.root +
+    wpath = '/application/rails/putivetra_dev/public/index_catalogs.html'
+    @@web = File.open(wpath, 'w')
+    self.web_head_write
+    @@index_html_links.each do |link|
+      @@web.puts "<p><a href=\"#{link}\">#{link.upcase}</a></p>"
+    end
+    self.web_body_end_write
+    @@web.close
+  end
 
   def self.web_head_write
     @@web.puts %Q[<html><head><title>  </title>
@@ -280,8 +369,8 @@ class DbToolPdfImport
   ## ##  serpar = { :cat_num => n  }
   ## ##    serpar[:brand_name] = dd
   ## ##      serpar[:catalog_name] = ddd
-  ## ##      serpar[:exp_file_name] = fn
-  ## ##      serpar[:exp_file_descriptor] = @@web
+  ## ##      serpar[:web_file_name] = fn
+  ## ##      serpar[:web_file_descriptor] = @@web
   ## ##          serpar[:series] = s
   ## ##          serpar[:series_path] = dpath
   ## ##            serpar[:data_file_name] = ds
@@ -300,7 +389,7 @@ class DbToolPdfImport
 
   #############################################################################
   #############################################################################
-  ########################    END OF PDF IMPORT 2  ############################
+  ########################    END OF PDF IMPORT    ############################
   #############################################################################
   #############################################################################
 
@@ -437,6 +526,7 @@ class DbToolPdfImport
     ##   .ods  .xls  Google-online  .xlsx
     ##########################################################################
 
+
   # DbToolPdfImport.read_excelx(f)        # тест одного файла xlsx по имени
   def self.read_excelx(f)
     oo = Excelx.new(f)
@@ -444,6 +534,11 @@ class DbToolPdfImport
     self.puts_first_row(oo, fff)
     fff.close
   end
+
+
+  #  ["Airwell", "Carrier", "Daikin", "General Climate", "General Fujitsu", "Gree",
+  #   "Hitachi", "Kentatsu", "LG", "McQuay", "Midea", "Mitsubishi Electric",
+  #   "Mitsubishi Heavy", "Panasonic", "Toshiba"]
 
 
 
