@@ -1,8 +1,11 @@
-class DbToolPdfImport
+class DbToolSeriesImport
   require 'RMagick'
   include Magick
 
-  @@data_root_path = '/application/putvetra/catalog_materials/for_site_catalog_corrected/'
+  @@data_root_path = '/application/putvetra/catalog_materials/for_site_catalog_corrected_from_tar/'
+  ## @@data_root_path = '/application/putvetra/catalog_materials/ser_images_after_resize_from_tar/'
+
+
   @@site_catalog_images = '/assets/catalog_images/'
   @@catalog_images_site_root = '/application/rails/putivetra_shared_dev' + @@site_catalog_images
   @@max_x = 0
@@ -29,6 +32,7 @@ class DbToolPdfImport
     serpar = {:ror_root_txt_file_descriptor => File.open('./scan_all_brands_catalog_folders.txt', 'w')}
     serpar[:ids_of_catalogs] = self.load_serias_ids_pair('./tmp/vap_tools_work/__ids_of_catalogs.txt')
     serpar[:serias_ids_hash] = self.load_serias_ids_pair('./tmp/vap_tools_work/__ids_of_series.txt')
+    serpar[:db_seriel_tab] = self.puts_series_from_db
     bds = Dir.new(@@data_root_path).map {|x| x if x !~ /^\./ }.compact.sort
     #  bds = ["Mitsubishi Electric", "Mitsubishi Heavy", "Panasonic", "Toshiba"]
     # puts bds.inspect
@@ -36,7 +40,7 @@ class DbToolPdfImport
     n = 1
     bds.each do |brand|
       serpar[:brand_name] = brand
-      #serpar[:ror_root_txt_file_descriptor].puts "\nBrand = #{brand}"                    # бренд
+      # serpar[:ror_root_txt_file_descriptor].puts "\nBrand = #{brand}"                    # бренд
       self.scan_brand_catalog_folder(serpar)     #   if brand == 'Toshiba'
     end
 
@@ -88,12 +92,21 @@ class DbToolPdfImport
       if s !~ /\.txt$/
         serpar[:series] = s.gsub(/^(\d+)_/, '')
         self.web_series_name_write(serpar[:series], serpar[:brand_name])
-        if ($1).to_i > 0 then  serpar[:this_series_id] = ($1).to_i else serpar[:this_series_id] = 0 end
+
+        if ($1).to_i > 0 then
+          serpar[:this_series_id] = ($1).to_i
+        else
+          serpar[:this_series_id] = 0  ### self.search_series_id_in_db(serpar)
+          note = "#{serpar[:brand_name]}\t#{serpar[:catalog_name]}\t#{serpar[:series]}\t#{serpar[:this_series_id]}\n"
+          serpar[:ror_root_txt_file_descriptor].puts note
+        end
+        
         # serpar[:ror_root_txt_file_descriptor].puts "        #{s}"                    # названия серии
         # puts "        #{s}"
         serpar[:series_path] = serpar[:kat_path] + s + '/'
-          self.scan_series_content(serpar)                  # генерация страниц и импорт в базу
-          # self.scan_series_images(serpar)              # предварительная генерация картинок
+          #self.scan_series_content(serpar)                  # генерация страниц и импорт в базу
+          ## # self.scan_series_images(serpar)              # предварительная генерация картинок
+
       end
     end
   end
@@ -118,13 +131,13 @@ class DbToolPdfImport
     pics = Dir.new(spath).map{|x| x if x !~ /^\./ }.compact
     pics.each do |pic|
       puts "#{spath + pic}"
-      # self.audit_images_sizes(spath + pic, 780)   # ширина контента 784px
-      self.resize_image_by_width(spath + pic, 780)
+      ###   self.audit_images_sizes(spath + pic, 780)   # ширина контента 784px
+      ###   self.resize_image_by_width(spath + pic, 780)
     end
   end
 
 
-  ###########################################################
+  ##########################################################
   ##########################################################  Обработка файла
 
   def self.etable_open_and_work(serpar)                  ### чтение таблицы
@@ -321,17 +334,17 @@ class DbToolPdfImport
   end
 
   def self.web_catalog_name_write(ddd)
-    @@web.puts %Q[ <div style="width:100%; height:100px; display:block; background-color:#fc3;">
+    @@web.puts %Q[ <div style="width:100%; height:80px; display:block; background-color:#fc3;">
                    <h2>каталог:  #{ddd} </h2> </div> ]
   end
 
   def self.web_series_name_write(s, dd)
-    @@web.puts %Q[ <div style="width:100%; height:90px; display:block; background-color:#fc6;">
+    @@web.puts %Q[ <div style="width:100%; height:40px; display:block; background-color:#fc6;">
                    <h3>  #{dd} - серия:  #{s} </h3> </div> ]
   end
 
   def self.web_data_file_path_write(dpath)
-    @@web.puts %Q[ <div style="width:100%; height:60px; display:block; background-color:#fcc;">
+    @@web.puts %Q[ <div style="width:100%; height:25px; display:block; background-color:#fcc;">
                    <h5>файл:  #{dpath} </h5> </div> ]
   end
 
@@ -380,8 +393,49 @@ class DbToolPdfImport
 
 
 
+  # DbToolPdfImport.puts_series_from_db
+  def self.puts_series_from_db
+    serii = []
+    fff = File.open('./scan_all_db_brands_series.txt', 'w')
+    Brand.all.each do |br|
+      br.catalogs.all.each do |cat|
+        cat.batches.all.each do |ser|
+          note = "#{br.title}\t#{cat.title}\t#{ser.title}\t#{ser.id}\t\n"
+          serii << note
+          fff.puts note
+        end
+      end
+    end
+    fff.close
+    serii
+  end
 
 
+  def self.search_series_id_in_db(serpar)
+    s_id = 0
+    ###  "#{br.title}\t#{cat.title}\t#{ser.title}\t#{ser.id}\t\n"
+    serpar[:db_seriel_tab].each do |s|
+      ss = s.split(/\t/)
+      a = self.comp_sfild(ss[0])
+      b = self.comp_sfild(serpar[:brand_name])
+      if a == b
+        a = self.comp_sfild(ss[1])
+        b = self.comp_sfild(serpar[:catalog_name])
+        if a == b
+          a = self.comp_sfild(ss[2])
+          b = self.comp_sfild(serpar[:series])
+          if a == b
+            s_id = ss[3]
+            break
+          end
+        end
+      end
+    end
+    s_id
+  end
+  def self.comp_sfild(ss)
+    ss.to_s.downcase.gsub(/[\s|_]/, '')
+  end
 
 
 
@@ -540,6 +594,9 @@ class DbToolPdfImport
   #   "Hitachi", "Kentatsu", "LG", "McQuay", "Midea", "Mitsubishi Electric",
   #   "Mitsubishi Heavy", "Panasonic", "Toshiba"]
 
+  def self.test
+     puts "\n\n   Test - Test - Test   \n\n"
+  end
 
 
   ########################################### eof
